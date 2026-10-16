@@ -15,19 +15,34 @@ BASE_DIR = Path(__file__).resolve().parent
 # Load .env file
 load_dotenv(dotenv_path=BASE_DIR / ".env")
 
+
+def _get_secret(key: str, default: str = "") -> str:
+    """Read from env first, then Streamlit secrets (for Streamlit Cloud)."""
+    val = os.getenv(key, "").strip()
+    if val:
+        return val
+    try:
+        import streamlit as st  # lazy import, safe when streamlit installed
+        if hasattr(st, "secrets") and key in st.secrets:
+            return str(st.secrets[key]).strip()
+    except Exception:
+        pass
+    return default
+
+
 # TinyFish API Configuration
-TINYFISH_API_KEY = os.getenv("TINYFISH_API_KEY", "").strip()
+TINYFISH_API_KEY = _get_secret("TINYFISH_API_KEY")
 TINYFISH_SEARCH_ENDPOINT = "https://api.search.tinyfish.ai"
 TINYFISH_FETCH_ENDPOINT = "https://api.fetch.tinyfish.ai"
-TINYFISH_LOCATION = os.getenv("TINYFISH_LOCATION", "IN").strip()
-TINYFISH_LANGUAGE = os.getenv("TINYFISH_LANGUAGE", "en").strip()
+TINYFISH_LOCATION = _get_secret("TINYFISH_LOCATION", "IN")
+TINYFISH_LANGUAGE = _get_secret("TINYFISH_LANGUAGE", "en")
 
 # Gemini LLM Configuration (Optional)
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
+GEMINI_API_KEY = _get_secret("GEMINI_API_KEY")
 
 # SQLite Database
 DEFAULT_DB_PATH = str(BASE_DIR / "niyamai.db")
-NIYAMAI_DB_PATH = os.getenv("NIYAMAI_DB_PATH", DEFAULT_DB_PATH).strip()
+NIYAMAI_DB_PATH = _get_secret("NIYAMAI_DB_PATH", DEFAULT_DB_PATH)
 
 # Trusted Indian Government & Procurement Domains
 DEFAULT_GOV_DOMAINS = [
