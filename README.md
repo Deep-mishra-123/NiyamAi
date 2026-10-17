@@ -1,7 +1,6 @@
 # ⚖️ NiyamAI — Autonomous AI Government Opportunity & Compliance Agent
 
 > **Tagline:** Never Miss a Government Opportunity or Compliance Deadline.  
-> **Built for:** AZINHACK '26
 
 ---
 
@@ -244,4 +243,4 @@ python -m pytest tests -v
 ---
 
 ## ⚖️ License
-Apache-2.0 License. Developed for AZINHACK '26.
+Apache-2.0 License. Developed by deep.
