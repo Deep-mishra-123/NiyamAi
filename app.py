@@ -35,116 +35,423 @@ from agents.matching_agent import MatchingAgent
 
 # Page configuration
 st.set_page_config(
-    page_title="NiyamAI - Autonomous Compliance & Tender Agent",
-    page_icon="⚖️",
+    page_title="NiyamAI",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-# ---------------- Navy & Teal Custom Styling ----------------
+# ---------------- LUXURY MINIMAL DESIGN SYSTEM ----------------
 st.markdown("""
 <style>
-    /* Theme color variables */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
     :root {
-        --bg-navy-dark: #0A192F;
-        --bg-navy-card: #112240;
-        --accent-teal: #00B4D8;
-        --accent-teal-light: #64DFDF;
-        --text-light: #F8F9FA;
-        --text-muted: #8892B0;
+        /* Luxury Minimal Palette */
+        --bg-canvas: #090A0C;
+        --bg-surface: #1A1D24;
+        --bg-surface-elevated: #232730;
+        --fg-primary: #F8FAFC;
+        --fg-secondary: #94A3B8;
+        --fg-muted: #586072;
+        --accent-primary: #00B4D8;
+        --accent-primary-dim: rgba(0, 180, 216, 0.12);
+        --accent-warm: #D4A843;
+        --accent-warm-dim: rgba(212, 168, 67, 0.12);
+        --accent-critical: #EF4444;
+        --accent-critical-dim: rgba(239, 68, 68, 0.12);
+        --border-subtle: #2D313D;
+        --border-emphasis: #3E4452;
+        --radius-sharp: 4px;
+        --radius-card: 6px;
+        --space-unit: 8px;
+        --transition-fast: 80ms ease-out;
+        --transition-standard: 120ms ease-out;
     }
-    
-    /* Header & typography */
-    h1, h2, h3 {
-        color: #0A192F !important;
+
+    /* Global Reset */
+    .stApp {
+        background: var(--bg-canvas);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        color: var(--fg-primary);
+    }
+
+    /* Typography System */
+    html, body, [class*="css"] {
+        font-family: 'Inter', sans-serif !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 700 !important;
+        letter-spacing: -0.02em !important;
+        color: var(--fg-primary) !important;
+        line-height: 1.15 !important;
+    }
+
+    h1 { font-size: clamp(1.75rem, 3vw, 2.25rem) !important; }
+    h2 { font-size: clamp(1.25rem, 2.5vw, 1.5rem) !important; }
+    h3 { font-size: clamp(1rem, 2vw, 1.125rem) !important; }
+
+    /* Label Style - Small, Bold, All-Caps */
+    .label-xs, .stMetricLabel, [data-testid="stMetricLabel"] {
+        font-size: 0.625rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.08em !important;
+        color: var(--fg-muted) !important;
+        line-height: 1 !important;
+    }
+
+    /* Value Style - Large, Light Weight */
+    .value-lg, [data-testid="stMetricValue"] {
+        font-size: clamp(1.75rem, 3vw, 2.5rem) !important;
+        font-weight: 300 !important;
+        letter-spacing: -0.03em !important;
+        color: var(--fg-primary) !important;
+        line-height: 1.1 !important;
+    }
+
+    .value-md {
+        font-size: 1.125rem !important;
+        font-weight: 400 !important;
+        color: var(--fg-secondary) !important;
+    }
+
+    /* Sidebar - Left Margin Navigation */
+    [data-testid="stSidebar"] {
+        background: var(--bg-surface) !important;
+        border-right: 1px solid var(--border-subtle) !important;
+        padding: calc(var(--space-unit) * 3) calc(var(--space-unit) * 2) !important;
+    }
+
+    [data-testid="stSidebar"] h2 {
+        font-size: 0.75rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.1em !important;
+        color: var(--fg-muted) !important;
+        margin-bottom: calc(var(--space-unit) * 2) !important;
+    }
+
+    [data-testid="stSidebar"] .stRadio > label {
+        font-size: 0.8125rem !important;
+        font-weight: 500 !important;
+        color: var(--fg-secondary) !important;
+        padding: calc(var(--space-unit) * 1.5) var(--space-unit) !important;
+        margin-bottom: calc(var(--space-unit) * 0.5) !important;
+        border-radius: var(--radius-sharp) !important;
+        transition: background var(--transition-fast), color var(--transition-fast) !important;
+    }
+
+    [data-testid="stSidebar"] .stRadio > label:hover {
+        background: var(--bg-surface-elevated) !important;
+        color: var(--fg-primary) !important;
+    }
+
+    [data-testid="stSidebar"] .stRadio [data-baseweb="radio"] > div:first-child {
+        background: var(--bg-surface-elevated) !important;
+        border: 1px solid var(--border-emphasis) !important;
+    }
+
+    [data-testid="stSidebar"] .stRadio [data-baseweb="radio"] > div:first-child > div {
+        background: var(--accent-primary) !important;
+    }
+
+    [data-testid="stSidebar"] hr {
+        border-color: var(--border-subtle) !important;
+        margin: calc(var(--space-unit) * 2) 0 !important;
+    }
+
+    /* Surface Cards - Flat, No Shadows, Sharp Corners */
+    .surface-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-card);
+        padding: calc(var(--space-unit) * 3);
+        transition: border-color var(--transition-fast), background var(--transition-fast);
+    }
+
+    .surface-card:hover {
+        border-color: var(--border-emphasis);
+        background: var(--bg-surface-elevated);
+    }
+
+    .surface-card-elevated {
+        background: var(--bg-surface-elevated);
+        border: 1px solid var(--border-emphasis);
+        border-radius: var(--radius-card);
+        padding: calc(var(--space-unit) * 3);
+    }
+
+    /* Metric Display Panels */
+    .metric-panel {
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--space-unit) * 0.5);
+    }
+
+    .metric-panel .label {
+        font-size: 0.625rem;
         font-weight: 700;
-    }
-    
-    /* Custom badge styles */
-    .niyam-badge-teal {
-        background-color: #E0F2FE;
-        color: #0369A1;
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 0.82rem;
-        font-weight: 600;
-        display: inline-block;
-        border: 1px solid #BAE6FD;
-    }
-    .niyam-badge-verified {
-        background-color: #DCFCE7;
-        color: #15803D;
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 0.82rem;
-        font-weight: 600;
-        display: inline-block;
-        border: 1px solid #BBF7D0;
-    }
-    .niyam-badge-review {
-        background-color: #FEF3C7;
-        color: #B45309;
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 0.82rem;
-        font-weight: 600;
-        display: inline-block;
-        border: 1px solid #FDE68A;
-    }
-    .niyam-badge-missing {
-        background-color: #FEE2E2;
-        color: #B91C1C;
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 0.82rem;
-        font-weight: 600;
-        display: inline-block;
-        border: 1px solid #FECACA;
-    }
-    
-    /* Card design */
-    .niyam-card {
-        background: #FFFFFF;
-        padding: 20px;
-        border-radius: 10px;
-        border: 1px solid #E2E8F0;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        margin-bottom: 16px;
-        transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    }
-    .niyam-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
-    }
-    
-    /* Metric hero card */
-    .metric-box {
-        background: linear-gradient(135deg, #0A192F 0%, #1E3A8A 100%);
-        color: #FFFFFF !important;
-        padding: 18px;
-        border-radius: 10px;
-        text-align: center;
-        box-shadow: 0 4px 12px rgba(10, 25, 47, 0.15);
-    }
-    .metric-value {
-        font-size: 2rem;
-        font-weight: 800;
-        color: #64DFDF;
-    }
-    .metric-label {
-        font-size: 0.85rem;
-        color: #E2E8F0;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.08em;
+        color: var(--fg-muted);
     }
-    
-    /* Disclaimer */
-    .legal-disclaimer {
-        font-size: 0.78rem;
-        color: #64748B;
-        border-left: 3px solid #00B4D8;
-        padding-left: 10px;
-        margin-top: 20px;
+
+    .metric-panel .value {
+        font-size: clamp(1.5rem, 2.5vw, 2rem);
+        font-weight: 300;
+        letter-spacing: -0.03em;
+        color: var(--fg-primary);
+        line-height: 1.1;
+    }
+
+    .metric-panel .value.accent {
+        color: var(--accent-primary);
+        font-weight: 500;
+    }
+
+    .metric-panel .value.warn {
+        color: var(--accent-warm);
+        font-weight: 500;
+    }
+
+    .metric-panel .value.critical {
+        color: var(--accent-critical);
+        font-weight: 500;
+    }
+
+    /* Buttons - Minimal, Instant State Changes */
+    .stButton > button {
+        font-family: 'Inter', sans-serif !important;
+        font-size: 0.8125rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.01em !important;
+        border-radius: var(--radius-sharp) !important;
+        padding: calc(var(--space-unit) * 1.25) calc(var(--space-unit) * 2.5) !important;
+        border: 1px solid transparent !important;
+        transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), opacity var(--transition-fast) !important;
+    }
+
+    .stButton > button[kind="primary"] {
+        background: var(--accent-primary) !important;
+        color: var(--bg-canvas) !important;
+        border-color: var(--accent-primary) !important;
+    }
+
+    .stButton > button[kind="primary"]:hover {
+        background: #009BB8 !important;
+        border-color: #009BB8 !important;
+    }
+
+    .stButton > button[kind="secondary"] {
+        background: transparent !important;
+        color: var(--fg-secondary) !important;
+        border-color: var(--border-emphasis) !important;
+    }
+
+    .stButton > button[kind="secondary"]:hover {
+        background: var(--bg-surface-elevated) !important;
+        color: var(--fg-primary) !important;
+        border-color: var(--accent-primary) !important;
+    }
+
+    .stButton > button:disabled {
+        opacity: 0.35 !important;
+        cursor: not-allowed !important;
+    }
+
+    /* Input Fields */
+    .stTextInput > div > div > input,
+    .stTextArea > div > div > textarea,
+    .stSelectbox > div > div > div {
+        background: var(--bg-surface-elevated) !important;
+        border: 1px solid var(--border-subtle) !important;
+        border-radius: var(--radius-sharp) !important;
+        color: var(--fg-primary) !important;
+        font-family: 'Inter', sans-serif !important;
+        font-size: 0.875rem !important;
+        transition: border-color var(--transition-fast), box-shadow var(--transition-fast) !important;
+    }
+
+    .stTextInput > div > div > input:focus,
+    .stTextArea > div > div > textarea:focus,
+    .stSelectbox > div > div > div:focus-within {
+        border-color: var(--accent-primary) !important;
+        box-shadow: 0 0 0 2px var(--accent-primary-dim) !important;
+    }
+
+    /* Tabs - Minimal Underline Style */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 0 !important;
+        border-bottom: 1px solid var(--border-subtle) !important;
+        padding-bottom: 0 !important;
+    }
+
+    .stTabs [data-baseweb="tab"] {
+        font-family: 'Inter', sans-serif !important;
+        font-size: 0.75rem !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.06em !important;
+        color: var(--fg-muted) !important;
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 2px solid transparent !important;
+        padding: calc(var(--space-unit) * 1.5) calc(var(--space-unit) * 2) !important;
+        margin-right: calc(var(--space-unit) * 1.5) !important;
+        transition: color var(--transition-fast), border-color var(--transition-fast) !important;
+    }
+
+    .stTabs [data-baseweb="tab"]:hover {
+        color: var(--fg-secondary) !important;
+    }
+
+    .stTabs [aria-selected="true"] {
+        color: var(--accent-primary) !important;
+        border-bottom-color: var(--accent-primary) !important;
+    }
+
+    /* Dataframes / Tables */
+    .stDataFrame {
+        border: 1px solid var(--border-subtle) !important;
+        border-radius: var(--radius-card) !important;
+        overflow: hidden !important;
+    }
+
+    .stDataFrame [data-testid="stTable"] {
+        font-family: 'Inter', sans-serif !important;
+        font-size: 0.8125rem !important;
+    }
+
+    .stDataFrame th {
+        background: var(--bg-surface-elevated) !important;
+        color: var(--fg-muted) !important;
+        font-weight: 600 !important;
+        font-size: 0.625rem !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.08em !important;
+        padding: calc(var(--space-unit) * 1.5) var(--space-unit) !important;
+        border-bottom: 1px solid var(--border-subtle) !important;
+    }
+
+    .stDataFrame td {
+        color: var(--fg-secondary) !important;
+        padding: calc(var(--space-unit) * 1.5) var(--space-unit) !important;
+        border-bottom: 1px solid var(--border-subtle) !important;
+    }
+
+    .stDataFrame tr:last-child td {
+        border-bottom: none !important;
+    }
+
+    .stDataFrame tr:hover td {
+        background: var(--bg-surface-elevated) !important;
+    }
+
+    /* Status Badges - Flat, Sharp */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--space-unit) * 0.5);
+        font-size: 0.625rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.06em !important;
+        padding: calc(var(--space-unit) * 0.5) calc(var(--space-unit) * 1.25) !important;
+        border-radius: var(--radius-sharp) !important;
+    }
+
+    .status-badge--verified {
+        background: var(--accent-primary-dim) !important;
+        color: var(--accent-primary) !important;
+        border: 1px solid var(--accent-primary) !important;
+    }
+
+    .status-badge--review {
+        background: var(--accent-warm-dim) !important;
+        color: var(--accent-warm) !important;
+        border: 1px solid var(--accent-warm) !important;
+    }
+
+    .status-badge--missing {
+        background: var(--accent-critical-dim) !important;
+        color: var(--accent-critical) !important;
+        border: 1px solid var(--accent-critical) !important;
+    }
+
+    .status-badge--neutral {
+        background: var(--bg-surface-elevated) !important;
+        color: var(--fg-muted) !important;
+        border: 1px solid var(--border-subtle) !important;
+    }
+
+    /* Code Blocks */
+    .stCodeBlock, code, pre {
+        font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+        font-size: 0.75rem !important;
+        background: var(--bg-surface-elevated) !important;
+        border: 1px solid var(--border-subtle) !important;
+        border-radius: var(--radius-sharp) !important;
+    }
+
+    /* Dividers */
+    hr, .stDivider {
+        border-color: var(--border-subtle) !important;
+        margin: calc(var(--space-unit) * 3) 0 !important;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: var(--bg-canvas);
+    }
+    ::-webkit-scrollbar-thumb {
+        background: var(--border-emphasis);
+        border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--fg-muted);
+    }
+
+    /* Hide Streamlit Branding */
+    #MainMenu, footer, header { visibility: hidden; }
+
+    /* Expander */
+    .streamlit-expanderHeader {
+        font-family: 'Inter', sans-serif !important;
+        font-size: 0.8125rem !important;
+        font-weight: 600 !important;
+        color: var(--fg-primary) !important;
+        background: var(--bg-surface) !important;
+        border: 1px solid var(--border-subtle) !important;
+        border-radius: var(--radius-sharp) !important;
+    }
+
+    .streamlit-expanderContent {
+        background: var(--bg-surface-elevated) !important;
+        border: 1px solid var(--border-subtle) !important;
+        border-top: none !important;
+        border-radius: 0 0 var(--radius-sharp) var(--radius-sharp) !important;
+    }
+
+    /* Tooltips */
+    .stTooltipIcon {
+        color: var(--fg-muted) !important;
+    }
+
+    /* Progress Bar */
+    .stProgress > div > div > div {
+        background: var(--accent-primary) !important;
+        border-radius: var(--radius-sharp) !important;
+    }
+
+    .stProgress > div > div {
+        background: var(--bg-surface-elevated) !important;
+        border-radius: var(--radius-sharp) !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -212,111 +519,164 @@ def get_matching_agent() -> MatchingAgent:
 
 # ---------------- Sidebar Navigation & Status ----------------
 with st.sidebar:
-    st.markdown("## ⚖️ **NiyamAI**")
-    st.caption("Never Miss a Government Opportunity or Compliance Deadline.")
-    st.divider()
+    st.markdown("""
+    <div style="margin-bottom: 24px;">
+        <div style="font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-muted); margin-bottom: 4px;">NIYAMAI</div>
+        <div style="font-size: 1.125rem; font-weight: 700; letter-spacing: -0.02em; color: var(--fg-primary);">Autonomous Compliance Agent</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("<hr>", unsafe_allow_html=True)
 
     # Navigation menu
     menu = st.radio(
-        "Navigation",
+        "NAVIGATION",
         [
-            "📊 Dashboard Overview",
-            "🏢 Business Profile",
-            "🔍 Live Scan & Search",
-            "📑 Notice Deep Dive & Audit",
-            "💾 Saved Notices & Deadlines",
-            "📜 Scan History",
-            "⚙️ API Settings & Diagnostics",
+            "DASHBOARD",
+            "BUSINESS PROFILE",
+            "LIVE SCAN",
+            "NOTICE AUDIT",
+            "SAVED NOTICES",
+            "SCAN HISTORY",
+            "API SETTINGS",
         ],
         index=0,
+        label_visibility="collapsed",
     )
 
-    st.divider()
+    st.markdown("<hr>", unsafe_allow_html=True)
 
-    # Active profile indicator
-    st.markdown(f"**Active Profile:**")
-    st.info(f"🏢 **{st.session_state.current_profile.name}**\n\n📌 Sector: {st.session_state.current_profile.industry} | {st.session_state.current_profile.state}")
+    # Active profile indicator - minimal
+    st.markdown("""
+    <div class="label-xs" style="margin-bottom: 8px;">ACTIVE PROFILE</div>
+    """, unsafe_allow_html=True)
 
-    st.divider()
+    profile = st.session_state.current_profile
+    st.markdown(f"""
+    <div class="surface-card" style="margin-bottom: 16px;">
+        <div class="value-md" style="margin-bottom: 4px;">{profile.name}</div>
+        <div class="label-xs" style="color: var(--fg-secondary);">{profile.industry} · {profile.state}</div>
+        <div class="label-xs" style="color: var(--fg-muted); margin-top: 8px;">{profile.business_size}</div>
+    </div>
+    """, unsafe_allow_html=True)
 
     # API Configuration Status
     client = get_tinyfish_client()
-    tf_status = "🟢 Connected" if client.is_configured() else "🔴 Key Missing"
-    gemini_status = "🟢 Enabled" if bool(st.session_state.user_gemini_api_key) else "⚪ Fallback Active"
+    tf_configured = client.is_configured()
+    gemini_enabled = bool(st.session_state.user_gemini_api_key)
 
-    st.markdown("### 🔌 API Status")
-    st.write(f"**TinyFish API:** {tf_status}")
-    st.write(f"**Gemini AI:** {gemini_status}")
+    st.markdown("""
+    <div class="label-xs" style="margin-bottom: 12px;">API STATUS</div>
+    """, unsafe_allow_html=True)
 
-    if not client.is_configured():
-        st.warning("⚠️ Enter your `TINYFISH_API_KEY` in 'API Settings' to enable live scanning.")
+    st.markdown(f"""
+    <div class="surface-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span class="value-md">TINYFISH SEARCH</span>
+            <span class="status-badge {'status-badge--verified' if tf_configured else 'status-badge--missing'}">{'CONNECTED' if tf_configured else 'KEY REQUIRED'}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="value-md">GEMINI EXTRACTION</span>
+            <span class="status-badge {'status-badge--verified' if gemini_enabled else 'status-badge--neutral'}">{'ENABLED' if gemini_enabled else 'FALLBACK MODE'}</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    if not tf_configured:
+        st.markdown("""
+        <div style="margin-top: 12px; padding: 12px; background: var(--accent-warm-dim); border: 1px solid var(--accent-warm); border-radius: var(--radius-sharp); font-size: 0.75rem; color: var(--accent-warm);">
+            Configure TINYFISH_API_KEY in API SETTINGS to enable live scanning
+        </div>
+        """, unsafe_allow_html=True)
 
 
 # ==============================================================================
 # PAGE 1: DASHBOARD OVERVIEW
 # ==============================================================================
-if menu == "📊 Dashboard Overview":
-    st.title("🛡️ NiyamAI Compliance & Opportunity Hub")
-    st.markdown(
-        "Autonomous AI compliance assistant for Indian startups and MSMEs. "
-        "Monitors official procurement portals (GeM, CPPP, MSME, Startup India), "
-        "extracts structured notices, verifies claims against source evidence, and tracks critical deadlines."
-    )
+if menu == "DASHBOARD":
+    st.markdown("""
+    <div style="margin-bottom: 32px;">
+        <div class="label-xs" style="margin-bottom: 8px; color: var(--accent-primary);">NIYAMAI / DASHBOARD</div>
+        <h1>Compliance & Opportunity Hub</h1>
+        <div class="value-md" style="margin-top: 8px; max-width: 60ch;">Autonomous AI compliance assistant for Indian startups and MSMEs. Monitors official procurement portals — GeM, CPPP, MSME, Startup India — extracts structured notices, verifies claims against source evidence, and tracks critical deadlines.</div>
+    </div>
+    """, unsafe_allow_html=True)
 
     saved_notices = st.session_state.db.get_saved_notices()
     scan_history = st.session_state.db.get_scan_history(limit=50)
 
-    # Hero metrics
-    c1, c2, c3, c4 = st.columns(4)
-    with c1:
+    # Hero metrics - asymmetric layout: left dense metrics, right contextual
+    col_metrics, col_context = st.columns([0.45, 0.55], gap="large")
+
+    with col_metrics:
         st.markdown("""
-        <div class="metric-box">
-            <div class="metric-value">""" + str(len(saved_notices)) + """</div>
-            <div class="metric-label">Saved Opportunities</div>
-        </div>
-        """, unsafe_allow_html=True)
-    with c2:
-        deadlines_count = sum(1 for n in saved_notices if n.deadline)
-        st.markdown("""
-        <div class="metric-box">
-            <div class="metric-value">""" + str(deadlines_count) + """</div>
-            <div class="metric-label">Tracked Deadlines</div>
-        </div>
-        """, unsafe_allow_html=True)
-    with c3:
-        avg_score = int(sum(n.relevance_score for n in saved_notices) / len(saved_notices)) if saved_notices else 0
-        st.markdown("""
-        <div class="metric-box">
-            <div class="metric-value">""" + str(avg_score) + """%</div>
-            <div class="metric-label">Avg Match Score</div>
-        </div>
-        """, unsafe_allow_html=True)
-    with c4:
-        st.markdown("""
-        <div class="metric-box">
-            <div class="metric-value">""" + str(len(scan_history)) + """</div>
-            <div class="metric-label">Live Scans Run</div>
-        </div>
+        <div class="label-xs" style="margin-bottom: 16px;">KEY METRICS</div>
         """, unsafe_allow_html=True)
 
-    st.markdown("---")
+        m1, m2 = st.columns(2, gap="medium")
+        with m1:
+            st.markdown(f"""
+            <div class="surface-card metric-panel">
+                <div class="label">SAVED OPPORTUNITIES</div>
+                <div class="value accent">{len(saved_notices)}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with m2:
+            deadlines_count = sum(1 for n in saved_notices if n.deadline)
+            st.markdown(f"""
+            <div class="surface-card metric-panel">
+                <div class="label">TRACKED DEADLINES</div>
+                <div class="value warn">{deadlines_count}</div>
+            </div>
+            """, unsafe_allow_html=True)
 
-    col_left, col_right = st.columns([3, 2])
+        m3, m4 = st.columns(2, gap="medium")
+        with m3:
+            avg_score = int(sum(n.relevance_score for n in saved_notices) / len(saved_notices)) if saved_notices else 0
+            st.markdown(f"""
+            <div class="surface-card metric-panel">
+                <div class="label">AVG MATCH SCORE</div>
+                <div class="value accent">{avg_score}%</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with m4:
+            st.markdown(f"""
+            <div class="surface-card metric-panel">
+                <div class="label">LIVE SCANS RUN</div>
+                <div class="value">{len(scan_history)}</div>
+            </div>
+            """, unsafe_allow_html=True)
 
-    with col_left:
-        st.subheader("⚡ Quick Action: One-Click Discovery")
-        st.markdown(f"Execute a live scan tailored for **{st.session_state.current_profile.name}**:")
+    with col_context:
+        st.markdown("""
+        <div class="label-xs" style="margin-bottom: 16px;">QUICK ACTION</div>
+        """, unsafe_allow_html=True)
 
-        suggested_q = f"{st.session_state.current_profile.industry} tender {st.session_state.current_profile.state} msme"
-        st.code(suggested_q, language="text")
+        profile = st.session_state.current_profile
+        suggested_q = f"{profile.industry} tender {profile.state} msme"
 
-        if st.button("🚀 Run Live Scan Now", type="primary"):
+        st.markdown(f"""
+        <div class="surface-card">
+            <div class="value-md" style="margin-bottom: 4px;">Suggested Query</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--fg-secondary); background: var(--bg-canvas); padding: 12px; border-radius: var(--radius-sharp); border: 1px solid var(--border-subtle); margin-bottom: 16px;">{suggested_q}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        if st.button("EXECUTE LIVE SCAN", type="primary", use_container_width=True):
             st.session_state.custom_query_override = suggested_q
-            st.info("Navigating to Live Scan page... Please click '🔍 Live Scan & Search' on the sidebar.")
+            st.toast("Navigate to LIVE SCAN to execute", icon="⚡")
 
-        st.subheader("📋 Upcoming Tracked Deadlines")
+        st.markdown("""
+        <div class="label-xs" style="margin-top: 24px; margin-bottom: 16px;">UPCOMING DEADLINES</div>
+        """, unsafe_allow_html=True)
+
         if not saved_notices:
-            st.info("No notices saved yet. Run a scan to discover public tenders and government schemes.")
+            st.markdown("""
+            <div class="surface-card" style="padding: 32px; text-align: center;">
+                <div class="value-md" style="color: var(--fg-muted);">No notices saved</div>
+                <div class="label-xs" style="margin-top: 8px;">Execute a live scan to discover opportunities</div>
+            </div>
+            """, unsafe_allow_html=True)
         else:
             for sn in saved_notices[:3]:
                 st.markdown(f"""
@@ -355,78 +715,54 @@ if menu == "📊 Dashboard Overview":
 # ==============================================================================
 # PAGE 2: BUSINESS PROFILE
 # ==============================================================================
-elif menu == "🏢 Business Profile":
-    st.title("🏢 Business Profile & Eligibility Attributes")
-    st.markdown(
-        "NiyamAI uses your company profile to score opportunities, identify eligibility gaps, "
-        "and produce tailored document checklists."
-    )
+elif menu == "BUSINESS PROFILE":
+    st.markdown("""
+    <div style="margin-bottom: 32px;">
+        <div class="label-xs" style="margin-bottom: 8px; color: var(--accent-primary);">NIYAMAI / BUSINESS PROFILE</div>
+        <h1>Eligibility Attributes</h1>
+        <div class="value-md" style="margin-top: 8px; max-width: 60ch;">NiyamAI uses your company profile to score opportunities, identify eligibility gaps, and produce tailored document checklists.</div>
+    </div>
+    """, unsafe_allow_html=True)
 
     # Preset templates
-    st.subheader("Load Quick Demo Profiles")
+    st.markdown("""
+    <div class="label-xs" style="margin-bottom: 16px;">DEMO PRESETS</div>
+    """, unsafe_allow_html=True)
+
     preset_cols = st.columns(3)
-    with preset_cols[0]:
-        if st.button("☀️ Solar EPC MSME (Pune)"):
-            p = BusinessProfile(
-                name="SuryaShakti Renewable Solutions Pvt Ltd",
-                industry="Solar",
-                state="Maharashtra",
-                business_size="Micro (Investment < ₹1 Cr, Turnover < ₹5 Cr)",
-                categories_of_interest=["Tender", "Subsidy"],
-                existing_registrations=["Udyam / MSME Registration", "GSTIN / GST Registration", "PAN Card"],
-                annual_turnover_inr=45.0,
-                description="Rooftop solar and EPC installation contractor.",
-            )
-            st.session_state.db.save_profile(p)
-            st.session_state.current_profile = p
-            st.success("Loaded SuryaShakti profile!")
-            st.rerun()
+    presets = [
+        ("SOLAR EPC MSME", "SuryaShakti Renewable Solutions Pvt Ltd", "Solar", "Maharashtra", "Micro (Investment < ₹1 Cr, Turnover < ₹5 Cr)", ["Tender", "Subsidy"], ["Udyam / MSME Registration", "GSTIN / GST Registration", "PAN Card"], 45.0, "Rooftop solar and EPC installation contractor."),
+        ("DRONE ROBOTICS STARTUP", "AeroKisan Agri-Drones Pvt Ltd", "Drones & Robotics", "Karnataka", "DPIIT Recognised Startup", ["Tender", "Grant"], ["DPIIT Startup Recognition", "GSTIN / GST Registration", "PAN Card", "ISO Certification"], 95.0, "Agricultural surveillance and crop spraying drones."),
+        ("PRECISION ENGINEERING", "Vidyut Precision Valves & Pumps", "Manufacturing", "Gujarat", "Small (Investment < ₹10 Cr, Turnover < ₹50 Cr)", ["Tender", "Government Scheme"], ["Udyam / MSME Registration", "GSTIN / GST Registration", "PAN Card", "Class 3 Digital Signature (DSC)"], 320.0, "Industrial valves manufacturer supplying water and gas projects."),
+    ]
 
-    with preset_cols[1]:
-        if st.button("🚁 Drone Robotics Startup (Bengaluru)"):
-            p = BusinessProfile(
-                name="AeroKisan Agri-Drones Pvt Ltd",
-                industry="Drones & Robotics",
-                state="Karnataka",
-                business_size="DPIIT Recognised Startup",
-                categories_of_interest=["Tender", "Grant"],
-                existing_registrations=["DPIIT Startup Recognition", "GSTIN / GST Registration", "PAN Card", "ISO Certification"],
-                annual_turnover_inr=95.0,
-                description="Agricultural surveillance and crop spraying drones.",
-            )
-            st.session_state.db.save_profile(p)
-            st.session_state.current_profile = p
-            st.success("Loaded AeroKisan profile!")
-            st.rerun()
+    for i, (label, name, industry, state, size, cats, regs, turnover, desc) in enumerate(presets):
+        with preset_cols[i]:
+            if st.button(label, use_container_width=True):
+                p = BusinessProfile(name=name, industry=industry, state=state, business_size=size, categories_of_interest=cats, existing_registrations=regs, annual_turnover_inr=turnover, description=desc)
+                st.session_state.db.save_profile(p)
+                st.session_state.current_profile = p
+                st.toast(f"Loaded {name}", icon="✓")
+                st.rerun()
 
-    with preset_cols[2]:
-        if st.button("⚙️ Precision Engineering (Gujarat)"):
-            p = BusinessProfile(
-                name="Vidyut Precision Valves & Pumps",
-                industry="Manufacturing",
-                state="Gujarat",
-                business_size="Small (Investment < ₹10 Cr, Turnover < ₹50 Cr)",
-                categories_of_interest=["Tender", "Government Scheme"],
-                existing_registrations=["Udyam / MSME Registration", "GSTIN / GST Registration", "PAN Card", "Class 3 Digital Signature (DSC)"],
-                annual_turnover_inr=320.0,
-                description="Industrial valves manufacturer supplying water and gas projects.",
-            )
-            st.session_state.db.save_profile(p)
-            st.session_state.current_profile = p
-            st.success("Loaded Vidyut Engineering profile!")
-            st.rerun()
-
-    st.markdown("---")
+    st.markdown("<hr>", unsafe_allow_html=True)
 
     # Profile Form
     with st.form("profile_form"):
         curr = st.session_state.current_profile
-        name = st.text_input("Business Name", value=curr.name)
+
+        st.markdown("""
+        <div class="label-xs" style="margin-bottom: 16px;">CORE IDENTITY</div>
+        """, unsafe_allow_html=True)
+
+        name = st.text_input("BUSINESS NAME", value=curr.name)
+
         col_a, col_b = st.columns(2)
         with col_a:
-            industry = st.text_input("Primary Industry / Sector", value=curr.industry, help="e.g. Solar, Software, Defense, Drone, Textile")
-            state = st.text_input("Registered State / UT", value=curr.state, help="e.g. Maharashtra, Karnataka, Gujarat, Delhi")
-            turnover = st.number_input("Annual Turnover (₹ in Lakhs)", min_value=0.0, value=float(curr.annual_turnover_inr or 25.0))
+            industry = st.text_input("PRIMARY INDUSTRY / SECTOR", value=curr.industry, help="e.g. Solar, Software, Defense, Drone, Textile")
+            state = st.text_input("REGISTERED STATE / UT", value=curr.state, help="e.g. Maharashtra, Karnataka, Gujarat, Delhi")
+            turnover = st.number_input("ANNUAL TURNOVER (₹ IN LAKHS)", min_value=0.0, value=float(curr.annual_turnover_inr or 25.0))
+
         with col_b:
             size_options = [
                 "Micro (Investment < ₹1 Cr, Turnover < ₹5 Cr)",
@@ -435,21 +771,21 @@ elif menu == "🏢 Business Profile":
                 "DPIIT Recognised Startup",
                 "Large Enterprise",
             ]
-            current_size_idx = 0
-            for i, opt in enumerate(size_options):
-                if curr.business_size in opt:
-                    current_size_idx = i
-                    break
-            business_size = st.selectbox("Business Size Tier", size_options, index=current_size_idx)
+            current_size_idx = next((i for i, opt in enumerate(size_options) if curr.business_size in opt), 0)
+            business_size = st.selectbox("BUSINESS SIZE TIER", size_options, index=current_size_idx)
 
             categories = st.multiselect(
-                "Notice Categories of Interest",
+                "NOTICE CATEGORIES OF INTEREST",
                 ["Tender", "Grant", "Subsidy", "Government Scheme", "Regulatory Notice", "Expression of Interest (EOI)"],
                 default=curr.categories_of_interest or ["Tender", "Subsidy"],
             )
 
+        st.markdown("""
+        <div class="label-xs" style="margin-top: 20px; margin-bottom: 12px;">ACTIVE REGISTRATIONS</div>
+        """, unsafe_allow_html=True)
+
         registrations = st.multiselect(
-            "Existing Active Registrations / Certifications",
+            "EXISTING REGISTRATIONS / CERTIFICATIONS",
             [
                 "Udyam / MSME Registration",
                 "GSTIN / GST Registration",
@@ -466,35 +802,36 @@ elif menu == "🏢 Business Profile":
             ]],
         )
 
-        description = st.text_area("Products / Capabilities Overview", value=curr.description or "")
+        st.markdown("""
+        <div class="label-xs" style="margin-top: 20px; margin-bottom: 12px;">CAPABILITIES</div>
+        """, unsafe_allow_html=True)
 
-        submitted = st.form_submit_button("💾 Save Profile", type="primary")
+        description = st.text_area("PRODUCTS / CAPABILITIES OVERVIEW", value=curr.description or "")
+
+        submitted = st.form_submit_button("SAVE PROFILE", type="primary", use_container_width=True)
         if submitted:
             updated_profile = BusinessProfile(
-                name=name,
-                industry=industry,
-                state=state,
-                business_size=business_size,
-                categories_of_interest=categories,
-                existing_registrations=registrations,
-                annual_turnover_inr=turnover,
-                description=description,
+                name=name, industry=industry, state=state, business_size=business_size,
+                categories_of_interest=categories, existing_registrations=registrations,
+                annual_turnover_inr=turnover, description=description,
             )
             st.session_state.db.save_profile(updated_profile)
             st.session_state.current_profile = updated_profile
-            st.success(f"Business profile '{name}' successfully updated and saved!")
+            st.toast(f"Profile '{name}' saved", icon="✓")
             st.rerun()
 
 
 # ==============================================================================
-# PAGE 3: LIVE SCAN & SEARCH
+# PAGE 3: LIVE SCAN
 # ==============================================================================
-elif menu == "🔍 Live Scan & Search":
-    st.title("🔍 Live Government Portal Discovery (Powered by TinyFish)")
-    st.markdown(
-        "Search live web portals in real-time using the **TinyFish Search API** (`api.search.tinyfish.ai`). "
-        "Filter for official Indian procurement, tender, and MSME scheme sources."
-    )
+elif menu == "LIVE SCAN":
+    st.markdown("""
+    <div style="margin-bottom: 32px;">
+        <div class="label-xs" style="margin-bottom: 8px; color: var(--accent-primary);">NIYAMAI / LIVE SCAN</div>
+        <h1>Government Portal Discovery</h1>
+        <div class="value-md" style="margin-top: 8px; max-width: 60ch;">Search live web portals in real-time using the TinyFish Search API. Filter for official Indian procurement, tender, and MSME scheme sources.</div>
+    </div>
+    """, unsafe_allow_html=True)
 
     client = get_tinyfish_client()
     if not client.is_configured():
@@ -540,30 +877,10 @@ elif menu == "🔍 Live Scan & Search":
     with scan_col1:
         scan_button = st.button("🚀 Run Live Scan with TinyFish", type="primary", disabled=not client.is_configured())
 
-    with scan_col2:
-        if not client.is_configured():
-            demo_search_clicked = st.button("🧪 Preview Sample Live Indian Tenders (Demo Mode)")
-            if demo_search_clicked:
-                from tests.conftest import SAMPLE_SEARCH_RESPONSE_JSON
-                from models import SearchResultItem
-                results = [
-                    SearchResultItem(
-                        position=r["position"],
-                        site_name=r["site_name"],
-                        title=r["title"],
-                        snippet=r["snippet"],
-                        url=r["url"],
-                        date=r.get("date"),
-                    )
-                    for r in SAMPLE_SEARCH_RESPONSE_JSON["results"]
-                ]
-                st.session_state.search_results = results
-                st.session_state.last_search_query = query + " (Demo Inspection Data)"
-                st.info("Loaded pre-recorded sample government tenders (MNRE & CPPP) for inspection!")
-                st.rerun()
+    st.markdown("<hr>", unsafe_allow_html=True)
 
     if scan_button and query:
-        with st.spinner("Calling TinyFish Search API (api.search.tinyfish.ai)..."):
+        with st.spinner("Calling TinyFish Search API..."):
             try:
                 purpose_stmt = f"Discovering public tenders, grants, and regulatory notices for {cp.name} in {cp.industry}"
                 search_response = client.search(
@@ -575,98 +892,122 @@ elif menu == "🔍 Live Scan & Search":
 
                 st.session_state.search_results = search_response.results
                 st.session_state.last_search_query = query
-
-                # Persist to database
-                st.session_state.db.save_scan(
-                    query=query,
-                    profile_name=cp.name,
-                    results=search_response.results,
-                )
-
-                st.success(f"Found {search_response.total_results} live opportunities!")
+                st.session_state.db.save_scan(query=query, profile_name=cp.name, results=search_response.results)
+                st.toast(f"Found {search_response.total_results} opportunities", icon="✓")
             except TinyFishAuthError as e:
                 st.error(f"Authentication Failed: {e}")
             except TinyFishCreditsError as e:
                 st.error(f"Credits Exhausted: {e}")
             except TinyFishRateLimitError as e:
-                st.warning(f"Rate Limited: {e}. Please wait a moment before querying again.")
+                st.warning(f"Rate Limited: {e}")
             except Exception as e:
                 st.error(f"Search failed: {e}")
 
+    if not client.is_configured() and not st.session_state.search_results:
+        if st.button("LOAD DEMO DATA", use_container_width=True):
+            from tests.conftest import SAMPLE_SEARCH_RESPONSE_JSON
+            from models import SearchResultItem
+            results = [
+                SearchResultItem(
+                    position=r["position"], site_name=r["site_name"],
+                    title=r["title"], snippet=r["snippet"], url=r["url"], date=r.get("date"),
+                )
+                for r in SAMPLE_SEARCH_RESPONSE_JSON["results"]
+            ]
+            st.session_state.search_results = results
+            st.session_state.last_search_query = query + " (Demo)"
+            st.toast("Loaded demo tenders", icon="✓")
+            st.rerun()
+
     # Display Search Results
     if st.session_state.search_results:
-        st.subheader(f"Results for '{st.session_state.get('last_search_query', query)}'")
-        st.caption("Click '⚡ Fetch & Analyze with NiyamAI' on any notice to pull content and run the agent audit.")
+        st.markdown(f"""
+        <div class="label-xs" style="margin-bottom: 16px;">SEARCH RESULTS — {len(st.session_state.search_results)} ITEMS</div>
+        """, unsafe_allow_html=True)
 
         for res in st.session_state.search_results:
-            with st.container():
-                st.markdown(f"""
-                <div class="niyam-card">
-                    <span class="niyam-badge-teal">{res.site_name or 'Web Source'}</span>
-                    <h3 style="margin-top: 8px; margin-bottom: 6px;">{res.title}</h3>
-                    <p style="color: #475569; font-size: 0.92rem;">{res.snippet}</p>
-                    <p style="font-size: 0.8rem; color: #94A3B8;">URL: <a href="{res.url}" target="_blank">{res.url}</a></p>
+            st.markdown(f"""
+            <div class="surface-card" style="margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 8px;">
+                    <div style="flex: 1;">
+                        <span class="status-badge status-badge--neutral">{res.site_name or 'WEB SOURCE'}</span>
+                        <div class="value-md" style="margin-top: 8px;">{res.title}</div>
+                    </div>
+                    <div style="flex-shrink: 0; width: 140px; text-align: right;">
+                        <div class="label-xs" style="margin-bottom: 4px;">POSITION</div>
+                        <div class="value-md" style="font-size: 1.5rem;">#{res.position}</div>
+                    </div>
                 </div>
-                """, unsafe_allow_html=True)
+                <div style="color: var(--fg-secondary); font-size: 0.8125rem; line-height: 1.5; margin-bottom: 8px;">{res.snippet}</div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--fg-muted);">URL: {res.url}</div>
+            </div>
+            """, unsafe_allow_html=True)
 
-                col_btn, _ = st.columns([2, 5])
-                with col_btn:
-                    if st.button(f"⚡ Fetch & Analyze", key=f"fetch_btn_{res.url}"):
-                        st.session_state.active_notice_url = res.url
-                        st.session_state.active_notice_title_hint = res.title
-                        st.session_state.fetched_notice = None
-                        st.session_state.notice_extraction = None
-                        st.session_state.notice_verification = None
-                        st.session_state.notice_matching = None
-                        st.info("Notice selected! Please switch to '📑 Notice Deep Dive & Audit' on the sidebar.")
+            if st.button("FETCH & ANALYZE", key=f"fetch_{res.url}", use_container_width=True):
+                st.session_state.active_notice_url = res.url
+                st.session_state.active_notice_title_hint = res.title
+                st.session_state.fetched_notice = None
+                st.session_state.notice_extraction = None
+                st.session_state.notice_verification = None
+                st.session_state.notice_matching = None
+                st.toast("Navigate to NOTICE AUDIT", icon="⚡")
     elif client.is_configured():
-        st.info("Enter a query and click 'Run Live Scan' to discover government tenders, grants, and notices.")
+        st.markdown("""
+        <div class="surface-card" style="padding: 32px; text-align: center;">
+            <div class="value-md" style="color: var(--fg-muted);">No results</div>
+            <div class="label-xs" style="margin-top: 8px;">Enter a query and execute scan</div>
+        </div>
+        """, unsafe_allow_html=True)
 
 
 # ==============================================================================
 # PAGE 4: NOTICE DEEP DIVE (FETCH, EXTRACT, VERIFY, MATCH)
 # ==============================================================================
-elif menu == "📑 Notice Deep Dive & Audit":
-    st.title("📑 Notice Deep Dive & Autonomous Audit")
-    st.markdown(
-        "Fetches official notice content with **TinyFish Fetch API**, extracts structured compliance fields, "
-        "independently verifies claims against raw text evidence, and computes business profile compatibility."
-    )
+elif menu == "NOTICE AUDIT":
+    st.markdown("""
+    <div style="margin-bottom: 32px;">
+        <div class="label-xs" style="margin-bottom: 8px; color: var(--accent-primary);">NIYAMAI / NOTICE AUDIT</div>
+        <h1>Fetch, Extract, Verify, Match</h1>
+        <div class="value-md" style="margin-top: 8px; max-width: 60ch;">Fetch official notice content with TinyFish Fetch API, extract structured compliance fields, independently verify claims against raw text evidence, and compute business profile compatibility.</div>
+    </div>
+    """, unsafe_allow_html=True)
 
     client = get_tinyfish_client()
     default_url = st.session_state.active_notice_url or "https://gem.gov.in/tenders/solar-pv-98712"
     title_hint = getattr(st.session_state, "active_notice_title_hint", None)
 
-    input_url = st.text_input("Notice URL to Fetch & Inspect", value=default_url)
+    # URL Input Section
+    st.markdown("""
+    <div class="label-xs" style="margin-bottom: 12px;">TARGET URL</div>
+    """, unsafe_allow_html=True)
+
+    input_url = st.text_input("NOTICE URL", value=default_url, label_visibility="collapsed", placeholder="https://gem.gov.in/tenders/...")
 
     fetch_col, sample_col = st.columns([1, 1])
     with fetch_col:
-        fetch_clicked = st.button("📥 1. Fetch Live Notice with TinyFish", type="primary", disabled=not client.is_configured())
+        fetch_clicked = st.button("FETCH LIVE NOTICE", type="primary", use_container_width=True, disabled=not client.is_configured())
 
     with sample_col:
         if not client.is_configured():
-            if st.button("🧪 Inspect Sample Notice (MNRE Solar Rooftop)"):
+            if st.button("LOAD DEMO NOTICE", use_container_width=True):
                 from tests.conftest import SAMPLE_FETCH_SUCCESS_JSON
                 from models import FetchResponseItem
                 raw_sample = SAMPLE_FETCH_SUCCESS_JSON["results"][0]
                 st.session_state.fetched_notice = FetchResponseItem(
-                    url=raw_sample["url"],
-                    final_url=raw_sample["final_url"],
-                    title=raw_sample["title"],
-                    description=raw_sample["description"],
-                    language=raw_sample["language"],
-                    text=raw_sample["text"],
+                    url=raw_sample["url"], final_url=raw_sample["final_url"],
+                    title=raw_sample["title"], description=raw_sample["description"],
+                    language=raw_sample["language"], text=raw_sample["text"],
                     format=raw_sample["format"],
                 )
                 st.session_state.active_notice_url = raw_sample["url"]
                 st.session_state.notice_extraction = None
                 st.session_state.notice_verification = None
                 st.session_state.notice_matching = None
-                st.info("Loaded sample MNRE Rooftop Solar tender notice for agent audit!")
+                st.toast("Loaded MNRE Solar Rooftop demo notice", icon="✓")
                 st.rerun()
 
     if fetch_clicked and input_url:
-        with st.spinner("Fetching page with TinyFish Fetch API (api.fetch.tinyfish.ai)..."):
+        with st.spinner("Fetching with TinyFish Fetch API..."):
             try:
                 fetch_res = client.fetch(
                     urls=[input_url],
@@ -676,322 +1017,525 @@ elif menu == "📑 Notice Deep Dive & Audit":
                 if fetch_res.results:
                     st.session_state.fetched_notice = fetch_res.results[0]
                     st.session_state.active_notice_url = input_url
-                    st.success(f"Successfully fetched document ({len(st.session_state.fetched_notice.text or '')} characters)!")
+                    st.toast(f"Fetched {len(st.session_state.fetched_notice.text or '')} chars", icon="✓")
                 elif fetch_res.errors:
                     err = fetch_res.errors[0]
-                    st.error(f"TinyFish Fetch Error: {err.error} (Status: {err.status})")
+                    st.error(f"Fetch Error: {err.error} (Status: {err.status})")
             except Exception as e:
-                st.error(f"Fetch request failed: {e}")
+                st.error(f"Fetch failed: {e}")
 
     # If document fetched, offer Analysis Pipeline
     if st.session_state.fetched_notice:
         fn = st.session_state.fetched_notice
 
-        # Pipeline tabs
-        tab1, tab2, tab3, tab4 = st.tabs([
-            "📄 Retrieved Source Content",
-            "🤖 Structured Extraction",
-            "🛡️ Evidence Verification Audit",
-            "🎯 Business Matching & Checklist",
-        ])
-
-        # TAB 1: RETRIEVED SOURCE
-        with tab1:
-            st.subheader("Source Document Metadata")
-            st.write(f"**Target URL:** {fn.url}")
-            st.write(f"**Final Redirect URL:** {fn.final_url or fn.url}")
-            st.write(f"**Detected Title:** {fn.title or 'N/A'}")
-            st.write(f"**Latency:** {fn.latency_ms or 'N/A'} ms")
-
-            st.markdown("---")
-            st.subheader("Raw Markdown Text (Retrieved Content)")
-            with st.expander("View Full Fetched Markdown", expanded=True):
-                st.markdown(fn.text[:8000] if fn.text else "*Empty content*")
-                if fn.text and len(fn.text) > 8000:
-                    st.caption("*(Showing first 8,000 characters for performance)*")
-
         # Automatically execute Extraction, Verification, Matching if not yet done
         if not st.session_state.notice_extraction:
-            with st.spinner("Running NiyamAI Multi-Agent Pipeline (Extracting, Verifying, Matching)..."):
+            with st.spinner("Running Multi-Agent Pipeline..."):
                 ext_agent = get_extraction_agent()
                 ver_agent = get_verification_agent()
                 mat_agent = get_matching_agent()
 
-                # 1. Extraction
-                extraction = ext_agent.extract(
-                    raw_text=fn.text or "",
-                    source_url=fn.url,
-                    title_hint=title_hint or fn.title,
-                )
+                extraction = ext_agent.extract(raw_text=fn.text or "", source_url=fn.url, title_hint=title_hint or fn.title)
                 st.session_state.notice_extraction = extraction
 
-                # 2. Verification
-                verification = ver_agent.verify(
-                    extraction=extraction,
-                    raw_text=fn.text or "",
-                )
+                verification = ver_agent.verify(extraction=extraction, raw_text=fn.text or "")
                 st.session_state.notice_verification = verification
 
-                # 3. Matching
-                matching = mat_agent.match(
-                    profile=st.session_state.current_profile,
-                    extraction=extraction,
-                )
+                matching = mat_agent.match(profile=st.session_state.current_profile, extraction=extraction)
                 st.session_state.notice_matching = matching
 
         ext = st.session_state.notice_extraction
         ver = st.session_state.notice_verification
         mat = st.session_state.notice_matching
 
+        # Pipeline tabs
+        tab1, tab2, tab3, tab4 = st.tabs([
+            "SOURCE", "EXTRACTION", "VERIFICATION", "MATCH & CHECKLIST"
+        ])
+
+        # TAB 1: RETRIEVED SOURCE
+        with tab1:
+            st.markdown("""
+            <div class="label-xs" style="margin-bottom: 16px;">DOCUMENT METADATA</div>
+            """, unsafe_allow_html=True)
+
+            meta_cols = st.columns(4)
+            with meta_cols[0]:
+                st.markdown(f"""
+                <div class="surface-card metric-panel">
+                    <div class="label">TARGET URL</div>
+                    <div class="value" style="font-size: 0.875rem; font-family: 'JetBrains Mono', monospace;">{fn.url}</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with meta_cols[1]:
+                st.markdown(f"""
+                <div class="surface-card metric-panel">
+                    <div class="label">FINAL URL</div>
+                    <div class="value" style="font-size: 0.875rem; font-family: 'JetBrains Mono', monospace;">{fn.final_url or fn.url}</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with meta_cols[2]:
+                st.markdown(f"""
+                <div class="surface-card metric-panel">
+                    <div class="label">DETECTED TITLE</div>
+                    <div class="value" style="font-size: 0.875rem;">{fn.title or 'N/A'}</div>
+                </div>
+                """, unsafe_allow_html=True)
+            with meta_cols[3]:
+                st.markdown(f"""
+                <div class="surface-card metric-panel">
+                    <div class="label">LATENCY</div>
+                    <div class="value accent">{fn.latency_ms or 'N/A'} ms</div>
+                </div>
+                """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div class="label-xs" style="margin-top: 24px; margin-bottom: 12px;">RAW MARKDOWN</div>
+            """, unsafe_allow_html=True)
+
+            with st.expander("VIEW FULL FETCHED MARKDOWN", expanded=True):
+                st.markdown(f"""
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: 1.6; background: var(--bg-canvas); border: 1px solid var(--border-subtle); border-radius: var(--radius-sharp); padding: 16px; max-height: 600px; overflow-y: auto;">
+                {fn.text[:12000] if fn.text else '*Empty content*'}
+                </div>
+                """, unsafe_allow_html=True)
+                if fn.text and len(fn.text) > 12000:
+                    st.caption(f"Showing first 12,000 of {len(fn.text)} characters")
+
         # TAB 2: EXTRACTION
         with tab2:
-            st.subheader("Structured Notice Fields (Validated with Pydantic)")
+            st.markdown("""
+            <div class="label-xs" style="margin-bottom: 16px;">STRUCTURED FIELDS (PYDANTIC VALIDATED)</div>
+            """, unsafe_allow_html=True)
 
             ec1, ec2 = st.columns(2)
             with ec1:
-                st.markdown(f"**Notice Title:** {ext.title}")
-                st.markdown(f"**Issuing Authority:** {ext.issuing_authority or 'Unknown'}")
-                st.markdown(f"**Category:** <span class='niyam-badge-teal'>{ext.category}</span>", unsafe_allow_html=True)
-                st.markdown(f"**Geographic Scope:** {ext.geographic_scope or 'All India'}")
+                fields = [
+                    ("NOTICE TITLE", ext.title),
+                    ("ISSUING AUTHORITY", ext.issuing_authority or "Unknown"),
+                    ("CATEGORY", ext.category),
+                    ("GEOGRAPHIC SCOPE", ext.geographic_scope or "All India"),
+                ]
+                for label, value in fields:
+                    st.markdown(f"""
+                    <div class="surface-card" style="margin-bottom: 12px;">
+                        <div class="label">{label}</div>
+                        <div class="value-md">{value}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
             with ec2:
-                if ext.submission_deadline:
-                    st.markdown(f"**Submission Deadline:** <span style='color: #DC2626; font-size: 1.1rem; font-weight: bold;'>⏰ {ext.submission_deadline}</span>", unsafe_allow_html=True)
-                else:
-                    st.markdown("**Submission Deadline:** <span class='niyam-badge-review'>Not Specified in Document</span>", unsafe_allow_html=True)
+                deadline_status = "DEADLINE FOUND" if ext.submission_deadline else "NOT SPECIFIED"
+                deadline_class = "accent" if ext.submission_deadline else "warn"
+                st.markdown(f"""
+                <div class="surface-card" style="margin-bottom: 12px;">
+                    <div class="label">SUBMISSION DEADLINE</div>
+                    <div class="value {deadline_class}" style="font-size: 1.25rem;">{ext.submission_deadline or deadline_status}</div>
+                </div>
+                """, unsafe_allow_html=True)
 
-                st.markdown(f"**Financials (EMD / Cost):** {ext.financial_requirements or 'None stated'}")
-                st.markdown(f"**Reference / ID:** {ext.scheme_or_tender_name or 'N/A'}")
+                st.markdown(f"""
+                <div class="surface-card" style="margin-bottom: 12px;">
+                    <div class="label">FINANCIALS (EMD / COST)</div>
+                    <div class="value-md">{ext.financial_requirements or 'None stated'}</div>
+                </div>
+                """, unsafe_allow_html=True)
 
-            st.markdown("---")
-            st.markdown("#### Mandatory Registrations")
+                st.markdown(f"""
+                <div class="surface-card" style="margin-bottom: 12px;">
+                    <div class="label">REFERENCE / ID</div>
+                    <div class="value-md">{ext.scheme_or_tender_name or 'N/A'}</div>
+                </div>
+                """, unsafe_allow_html=True)
+
             if ext.required_registrations:
+                st.markdown("""
+                <div class="label-xs" style="margin-top: 20px; margin-bottom: 12px;">MANDATORY REGISTRATIONS</div>
+                """, unsafe_allow_html=True)
                 for r in ext.required_registrations:
-                    st.markdown(f"- 📋 **{r}**")
-            else:
-                st.write("No specialized registrations identified in initial document.")
+                    st.markdown(f"""
+                    <div class="surface-card" style="margin-bottom: 8px; display: flex; align-items: center; gap: 12px;">
+                        <div class="status-badge status-badge--verified">REQUIRED</div>
+                        <div class="value-md">{r}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
-            st.markdown("#### Required Application Documents")
             if ext.required_documents:
+                st.markdown("""
+                <div class="label-xs" style="margin-top: 20px; margin-bottom: 12px;">REQUIRED APPLICATION DOCUMENTS</div>
+                """, unsafe_allow_html=True)
                 for d in ext.required_documents:
-                    st.markdown(f"- 📁 {d}")
-            else:
-                st.write("No document list explicitly extracted.")
+                    st.markdown(f"""
+                    <div class="surface-card" style="margin-bottom: 8px; display: flex; align-items: center; gap: 12px;">
+                        <div class="status-badge status-badge--neutral">DOCUMENT</div>
+                        <div class="value-md">{d}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
             if ext.uncertain_or_missing_fields:
-                st.markdown("---")
-                st.warning(f"⚠️ **Uncertain or Missing Fields from Source:** {', '.join(ext.uncertain_or_missing_fields)}")
+                st.markdown(f"""
+                <div style="margin-top: 20px; padding: 16px; background: var(--accent-warm-dim); border: 1px solid var(--accent-warm); border-radius: var(--radius-sharp);">
+                    <div class="label-xs" style="color: var(--accent-warm); margin-bottom: 8px;">UNCERTAIN OR MISSING FIELDS</div>
+                    <div class="value-md" style="color: var(--accent-warm);">{', '.join(ext.uncertain_or_missing_fields)}</div>
+                </div>
+                """, unsafe_allow_html=True)
 
         # TAB 3: VERIFICATION
         with tab3:
-            st.subheader("🛡️ Source Evidence & Claim Verification")
-            st.markdown(
-                "NiyamAI's Verification Agent compares each extracted field against the retrieved raw content. "
-                "Claims are strictly categorized to prevent AI hallucinations."
-            )
+            st.markdown("""
+            <div class="label-xs" style="margin-bottom: 16px;">SOURCE EVIDENCE & CLAIM VERIFICATION</div>
+            """, unsafe_allow_html=True)
 
-            st.markdown(f"**Overall Audit Status:** `{ver.overall_status}`")
-            st.caption(ver.summary)
+            status_map = {
+                VerificationStatus.VERIFIED: ("VERIFIED", "status-badge--verified"),
+                VerificationStatus.PARTIAL: ("PARTIAL", "status-badge--neutral"),
+                VerificationStatus.NEEDS_REVIEW: ("NEEDS REVIEW", "status-badge--review"),
+                VerificationStatus.MISSING: ("MISSING FROM SOURCE", "status-badge--missing"),
+            }
+
+            st.markdown(f"""
+            <div class="surface-card" style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div class="label">OVERALL AUDIT STATUS</div>
+                        <div class="value-md">{ver.overall_status}</div>
+                    </div>
+                    <span class="status-badge {status_map.get(ver.overall_status, ('', 'status-badge--neutral'))[1]}">{status_map.get(ver.overall_status, ('', ''))[0]}</span>
+                </div>
+                <div class="value-md" style="margin-top: 8px; color: var(--fg-secondary);">{ver.summary}</div>
+            </div>
+            """, unsafe_allow_html=True)
 
             for claim in ver.claims:
-                if claim.status == VerificationStatus.VERIFIED:
-                    badge = "<span class='niyam-badge-verified'>✅ Verified</span>"
-                elif claim.status == VerificationStatus.PARTIAL:
-                    badge = "<span class='niyam-badge-teal'>ℹ️ Partially Supported</span>"
-                elif claim.status == VerificationStatus.NEEDS_REVIEW:
-                    badge = "<span class='niyam-badge-review'>⚠️ Needs Review</span>"
-                else:
-                    badge = "<span class='niyam-badge-missing'>❌ Missing From Source</span>"
+                status_label, status_class = status_map.get(claim.status, ("UNKNOWN", "status-badge--neutral"))
+                evidence = claim.supporting_evidence or "— No supporting text found —"
 
                 st.markdown(f"""
-                <div class="niyam-card">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <h4 style="margin: 0;">Claim: {claim.claim_field}</h4>
-                        {badge}
+                <div class="surface-card" style="margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 12px;">
+                        <div>
+                            <div class="label">CLAIM FIELD</div>
+                            <div class="value-md">{claim.claim_field}</div>
+                        </div>
+                        <span class="status-badge {status_class}" style="flex-shrink: 0;">{status_label}</span>
                     </div>
-                    <p style="margin: 8px 0 4px 0;"><strong>Extracted Value:</strong> <code>{claim.extracted_value}</code></p>
-                    <p style="margin: 0 0 4px 0; color: #475569; font-size: 0.88rem;"><strong>Source Evidence:</strong> <em>"{claim.supporting_evidence}"</em></p>
-                    <p style="margin: 0; color: #64748B; font-size: 0.82rem;"><strong>Audit Rationale:</strong> {claim.explanation}</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 0.8125rem;">
+                        <div>
+                            <div class="label" style="margin-bottom: 4px;">EXTRACTED VALUE</div>
+                            <div style="font-family: 'JetBrains Mono', monospace; color: var(--fg-primary); background: var(--bg-canvas); padding: 8px; border-radius: var(--radius-sharp); border: 1px solid var(--border-subtle);">{claim.extracted_value}</div>
+                        </div>
+                        <div>
+                            <div class="label" style="margin-bottom: 4px;">SOURCE EVIDENCE</div>
+                            <div style="color: var(--fg-secondary); background: var(--bg-canvas); padding: 8px; border-radius: var(--radius-sharp); border: 1px solid var(--border-subtle); font-style: italic;">{evidence}</div>
+                        </div>
+                    </div>
+                    <div class="label" style="margin-top: 12px;">AUDIT RATIONALE</div>
+                    <div class="value-md" style="color: var(--fg-secondary);">{claim.explanation}</div>
                 </div>
                 """, unsafe_allow_html=True)
 
         # TAB 4: MATCHING & CHECKLIST
         with tab4:
-            st.subheader(f"🎯 Compatibility with {st.session_state.current_profile.name}")
+            st.markdown(f"""
+            <div class="label-xs" style="margin-bottom: 16px;">COMPATIBILITY — {st.session_state.current_profile.name.upper()}</div>
+            """, unsafe_allow_html=True)
 
-            mcol1, mcol2 = st.columns([1, 2])
+            mcol1, mcol2 = st.columns([0.35, 0.65], gap="large")
+
             with mcol1:
+                score_class = "accent" if mat.relevance_score >= 80 else "warn" if mat.relevance_score >= 50 else "critical"
                 st.markdown(f"""
-                <div class="metric-box">
-                    <div class="metric-value">{mat.relevance_score}/100</div>
-                    <div class="metric-label">Relevance Score</div>
+                <div class="surface-card metric-panel" style="text-align: center; padding: 32px;">
+                    <div class="label">RELEVANCE SCORE</div>
+                    <div class="value {score_class}" style="font-size: 4rem; line-height: 1;">{mat.relevance_score}</div>
+                    <div style="margin-top: 16px; height: 4px; background: var(--bg-canvas); border-radius: 2px; overflow: hidden;">
+                        <div style="width: {mat.relevance_score}%; height: 100%; background: var(--accent-primary);"></div>
+                    </div>
                 </div>
                 """, unsafe_allow_html=True)
 
-                st.markdown("#### Score Rubric Breakdown")
+                st.markdown("""
+                <div class="label-xs" style="margin-top: 24px; margin-bottom: 12px;">SCORE BREAKDOWN</div>
+                """, unsafe_allow_html=True)
+
                 for k, v in mat.score_breakdown.items():
-                    st.write(f"- **{k}:** {v} pts")
+                    st.markdown(f"""
+                    <div class="surface-card" style="margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                        <div class="value-md">{k}</div>
+                        <div class="value accent" style="font-size: 1.25rem;">{v} pts</div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
             with mcol2:
-                st.markdown(f"**Analysis Summary:** {mat.relevance_explanation}")
+                st.markdown(f"""
+                <div class="surface-card" style="margin-bottom: 20px;">
+                    <div class="label">ANALYSIS SUMMARY</div>
+                    <div class="value-md">{mat.relevance_explanation}</div>
+                </div>
+                """, unsafe_allow_html=True)
 
                 if mat.satisfied_criteria:
-                    st.success("**Satisfied Requirements:**\n\n" + "\n".join(f"- ✅ {s}" for s in mat.satisfied_criteria))
+                    st.markdown("""
+                    <div class="label-xs" style="margin-bottom: 12px;">SATISFIED REQUIREMENTS</div>
+                    """, unsafe_allow_html=True)
+                    for s in mat.satisfied_criteria:
+                        st.markdown(f"""
+                        <div class="surface-card" style="margin-bottom: 8px; display: flex; align-items: center; gap: 12px;">
+                            <div class="status-badge status-badge--verified">MET</div>
+                            <div class="value-md">{s}</div>
+                        </div>
+                        """, unsafe_allow_html=True)
 
                 if mat.unsatisfied_criteria:
-                    st.error("**Gaps & Ineligibility Risks:**\n\n" + "\n".join(f"- ❌ {u}" for u in mat.unsatisfied_criteria))
+                    st.markdown("""
+                    <div class="label-xs" style="margin-top: 20px; margin-bottom: 12px;">GAPS & INELIGIBILITY RISKS</div>
+                    """, unsafe_allow_html=True)
+                    for u in mat.unsatisfied_criteria:
+                        st.markdown(f"""
+                        <div class="surface-card" style="margin-bottom: 8px; display: flex; align-items: center; gap: 12px;">
+                            <div class="status-badge status-badge--missing">GAP</div>
+                            <div class="value-md">{u}</div>
+                        </div>
+                        """, unsafe_allow_html=True)
 
                 if mat.information_needed:
-                    st.warning("**Information Still Needed from You:**\n\n" + "\n".join(f"- ❓ {q}" for q in mat.information_needed))
+                    st.markdown("""
+                    <div class="label-xs" style="margin-top: 20px; margin-bottom: 12px;">INFORMATION NEEDED FROM YOU</div>
+                    """, unsafe_allow_html=True)
+                    for q in mat.information_needed:
+                        st.markdown(f"""
+                        <div class="surface-card" style="margin-bottom: 8px; display: flex; align-items: center; gap: 12px;">
+                            <div class="status-badge status-badge--review">PENDING</div>
+                            <div class="value-md">{q}</div>
+                        </div>
+                        """, unsafe_allow_html=True)
 
-            st.markdown("---")
-            st.subheader("📋 Interactive Application Document Checklist")
-            st.caption("Check off items as you assemble your bidding packet:")
+                st.markdown("""
+                <div class="label-xs" style="margin-top: 24px; margin-bottom: 12px;">APPLICATION DOCUMENT CHECKLIST</div>
+                """, unsafe_allow_html=True)
 
-            for idx, item in enumerate(mat.checklist):
-                status_icon = "✅" if item.is_present_in_profile else "⚠️"
-                st.checkbox(
-                    f"{status_icon} **{item.document_name}** — *{item.status_note}*",
-                    value=item.is_present_in_profile,
-                    key=f"chk_{idx}_{item.document_name}",
-                )
+                for idx, item in enumerate(mat.checklist):
+                    is_present = item.is_present_in_profile
+                    badge_class = "status-badge--verified" if is_present else "status-badge--missing"
+                    badge_label = "PRESENT" if is_present else "MISSING"
+                    st.markdown(f"""
+                    <div class="surface-card" style="margin-bottom: 8px; display: flex; align-items: center; gap: 12px;">
+                        <span class="status-badge {badge_class}">{badge_label}</span>
+                        <div style="flex: 1;">
+                            <div class="value-md" style="margin-bottom: 2px;">{item.document_name}</div>
+                            <div class="label-xs" style="color: var(--fg-secondary);">{item.status_note}</div>
+                        </div>
+                        <input type="checkbox" {"checked" if is_present else ""} disabled style="width: 18px; height: 18px; accent-color: var(--accent-primary);">
+                    </div>
+                    """, unsafe_allow_html=True)
 
-            st.markdown("---")
-            st.subheader("🚀 Actionable Next Steps")
-            for step in mat.recommended_next_steps:
-                st.markdown(f"- {step}")
+                st.markdown("""
+                <div class="label-xs" style="margin-top: 24px; margin-bottom: 12px;">RECOMMENDED NEXT STEPS</div>
+                """, unsafe_allow_html=True)
 
-            st.markdown("---")
-            # Save button
-            if st.button("💾 Save Notice to Local Database", type="primary"):
-                saved_obj = SavedNotice(
-                    url=fn.url,
-                    title=ext.title,
-                    site_name=fn.url.split("/")[2] if "/" in fn.url else "Government Portal",
-                    category=ext.category,
-                    deadline=ext.submission_deadline,
-                    relevance_score=mat.relevance_score,
-                    raw_content=fn.text or "",
-                    extraction=ext,
-                    verification=ver,
-                    matching=mat,
-                )
-                nid, is_dup = st.session_state.db.save_notice(saved_obj)
-                if is_dup:
-                    st.info(f"Notice updated in database (ID: {nid}, URL already existed).")
-                else:
-                    st.success(f"Notice successfully saved to database (ID: {nid})!")
+                for step in mat.recommended_next_steps:
+                    st.markdown(f"""
+                    <div class="surface-card" style="margin-bottom: 8px; display: flex; align-items: flex-start; gap: 12px;">
+                        <div class="label-xs" style="color: var(--accent-primary); margin-top: 2px;">→</div>
+                        <div class="value-md">{step}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+        # Save button
+        st.markdown("<hr>", unsafe_allow_html=True)
+        if st.button("SAVE NOTICE TO DATABASE", type="primary", use_container_width=True):
+            saved_obj = SavedNotice(
+                url=fn.url, title=ext.title,
+                site_name=fn.url.split("/")[2] if "/" in fn.url else "Government Portal",
+                category=ext.category, deadline=ext.submission_deadline,
+                relevance_score=mat.relevance_score, raw_content=fn.text or "",
+                extraction=ext, verification=ver, matching=mat,
+            )
+            nid, is_dup = st.session_state.db.save_notice(saved_obj)
+            if is_dup:
+                st.toast(f"Notice updated (ID: {nid})", icon="↻")
+            else:
+                st.toast(f"Notice saved (ID: {nid})", icon="✓")
 
 
 # ==============================================================================
-# PAGE 5: SAVED NOTICES & DEADLINES
+# PAGE 5: SAVED NOTICES
 # ==============================================================================
-elif menu == "💾 Saved Notices & Deadlines":
-    st.title("💾 Saved Government Opportunities & Compliance Deadlines")
-    st.markdown("Persisted records from SQLite database with deduplication and complete agent audit trails.")
+elif menu == "SAVED NOTICES":
+    st.markdown("""
+    <div style="margin-bottom: 32px;">
+        <div class="label-xs" style="margin-bottom: 8px; color: var(--accent-primary);">NIYAMAI / SAVED NOTICES</div>
+        <h1>Persisted Opportunities</h1>
+        <div class="value-md" style="margin-top: 8px; max-width: 60ch;">SQLite database records with deduplication and complete agent audit trails.</div>
+    </div>
+    """, unsafe_allow_html=True)
 
     saved_notices = st.session_state.db.get_saved_notices()
 
     if not saved_notices:
-        st.info("No saved notices yet. Discover notices using '🔍 Live Scan & Search' and save them.")
+        st.markdown("""
+        <div class="surface-card" style="padding: 48px; text-align: center;">
+            <div class="value-md" style="color: var(--fg-muted);">No saved notices</div>
+            <div class="label-xs" style="margin-top: 8px;">Execute a live scan and save notices to populate this view</div>
+        </div>
+        """, unsafe_allow_html=True)
     else:
-        st.write(f"Total Saved Notices: **{len(saved_notices)}**")
+        st.markdown(f"""
+        <div class="label-xs" style="margin-bottom: 16px;">TOTAL RECORDS — {len(saved_notices)}</div>
+        """, unsafe_allow_html=True)
 
         for sn in saved_notices:
-            with st.container():
-                st.markdown(f"""
-                <div class="niyam-card">
-                    <div style="display: flex; justify-content: space-between;">
-                        <span class="niyam-badge-teal">{sn.site_name}</span>
-                        <span class="niyam-badge-verified">Score: {sn.relevance_score}/100</span>
-                    </div>
-                    <h3 style="margin-top: 8px;">{sn.title}</h3>
-                    <p><strong>Category:</strong> {sn.category} | <strong>Saved At:</strong> {sn.saved_at}</p>
-                    <p style="color: #DC2626; font-weight: bold;">⏰ Deadline: {sn.deadline or 'Check Portal'}</p>
-                    <p><a href="{sn.url}" target="_blank">🔗 Official Source: {sn.url}</a></p>
-                </div>
-                """, unsafe_allow_html=True)
+            score_class = "accent" if sn.relevance_score >= 80 else "warn" if sn.relevance_score >= 50 else "critical"
+            deadline_display = sn.deadline or "Check Portal"
 
-                col_a, col_b = st.columns([1, 5])
-                with col_a:
-                    if st.button("🗑️ Delete", key=f"del_{sn.id}"):
-                        st.session_state.db.delete_saved_notice(sn.id)
-                        st.warning("Notice deleted.")
-                        st.rerun()
-                with col_b:
-                    if st.button("🔍 Open Full Audit", key=f"open_{sn.id}"):
-                        st.session_state.active_notice_url = sn.url
-                        st.session_state.notice_extraction = sn.extraction
-                        st.session_state.notice_verification = sn.verification
-                        st.session_state.notice_matching = sn.matching
-                        st.info("Notice loaded! Switch to '📑 Notice Deep Dive & Audit' to view.")
+            st.markdown(f"""
+            <div class="surface-card" style="margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 12px;">
+                    <div style="flex: 1;">
+                        <span class="status-badge status-badge--neutral">{sn.site_name}</span>
+                        <div class="value-md" style="margin-top: 8px;">{sn.title}</div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0;">
+                        <span class="status-badge {'status-badge--verified' if score_class == 'accent' else 'status-badge--review' if score_class == 'warn' else 'status-badge--missing'}">SCORE {sn.relevance_score}/100</span>
+                        <div class="label-xs" style="text-align: right;">SAVED: {sn.saved_at}</div>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; font-size: 0.8125rem;">
+                    <div><div class="label">CATEGORY</div><div class="value-md">{sn.category}</div></div>
+                    <div><div class="label">DEADLINE</div><div class="value warn">{deadline_display}</div></div>
+                </div>
+                <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--fg-muted);">{sn.url}</div>
+                    <div style="display: flex; gap: 8px;">
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            col_a, col_b = st.columns([1, 5])
+            with col_a:
+                if st.button("DELETE", key=f"del_{sn.id}", use_container_width=True):
+                    st.session_state.db.delete_saved_notice(sn.id)
+                    st.toast("Notice deleted", icon="🗑️")
+                    st.rerun()
+            with col_b:
+                if st.button("OPEN AUDIT", key=f"open_{sn.id}", use_container_width=True):
+                    st.session_state.active_notice_url = sn.url
+                    st.session_state.notice_extraction = sn.extraction
+                    st.session_state.notice_verification = sn.verification
+                    st.session_state.notice_matching = sn.matching
+                    st.toast("Navigate to NOTICE AUDIT", icon="⚡")
 
 
 # ==============================================================================
 # PAGE 6: SCAN HISTORY
 # ==============================================================================
-elif menu == "📜 Scan History":
-    st.title("📜 Live Scan Audit History")
-    st.markdown("Audit log of all queries executed against TinyFish Search API.")
+elif menu == "SCAN HISTORY":
+    st.markdown("""
+    <div style="margin-bottom: 32px;">
+        <div class="label-xs" style="margin-bottom: 8px; color: var(--accent-primary);">NIYAMAI / SCAN HISTORY</div>
+        <h1>Audit Log</h1>
+        <div class="value-md" style="margin-top: 8px; max-width: 60ch;">Audit log of all queries executed against TinyFish Search API.</div>
+    </div>
+    """, unsafe_allow_html=True)
 
     history = st.session_state.db.get_scan_history(limit=50)
     if not history:
-        st.info("No scan history recorded yet.")
+        st.markdown("""
+        <div class="surface-card" style="padding: 48px; text-align: center;">
+            <div class="value-md" style="color: var(--fg-muted);">No scan history recorded</div>
+        </div>
+        """, unsafe_allow_html=True)
     else:
         for item in history:
-            with st.expander(f"🔍 '{item['query']}' — {item['result_count']} results ({item['scanned_at']})"):
-                st.write(f"**Profile:** {item['profile_name']}")
-                st.write(f"**Timestamp:** {item['scanned_at']}")
+            with st.expander(f"QUERY: {item['query']} — {item['result_count']} RESULTS ({item['scanned_at']})", expanded=False):
+                st.markdown(f"""
+                <div class="surface-card">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 16px;">
+                        <div><div class="label">PROFILE</div><div class="value-md">{item['profile_name']}</div></div>
+                        <div><div class="label">TIMESTAMP</div><div class="value-md">{item['scanned_at']}</div></div>
+                        <div><div class="label">RESULTS</div><div class="value accent">{item['result_count']}</div></div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
                 for r in item["results"]:
-                    st.markdown(f"- **{r.get('title')}** ({r.get('site_name')}) — [Link]({r.get('url')})")
+                    st.markdown(f"""
+                    <div class="surface-card" style="margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div class="value-md">{r.get('title')}</div>
+                            <div class="label-xs">{r.get('site_name')}</div>
+                        </div>
+                        <a href="{r.get('url')}" target="_blank" class="status-badge status-badge--neutral" style="text-decoration: none;">OPEN SOURCE</a>
+                    </div>
+                    """, unsafe_allow_html=True)
 
 
 # ==============================================================================
-# PAGE 7: API SETTINGS & DIAGNOSTICS
+# PAGE 7: API SETTINGS
 # ==============================================================================
-elif menu == "⚙️ API Settings & Diagnostics":
-    st.title("⚙️ API Configuration & System Diagnostics")
-    st.markdown("Configure server-side environment variables and verify connectivity.")
+elif menu == "API SETTINGS":
+    st.markdown("""
+    <div style="margin-bottom: 32px;">
+        <div class="label-xs" style="margin-bottom: 8px; color: var(--accent-primary);">NIYAMAI / API SETTINGS</div>
+        <h1>Configuration & Diagnostics</h1>
+        <div class="value-md" style="margin-top: 8px; max-width: 60ch;">Configure credentials and verify system connectivity.</div>
+    </div>
+    """, unsafe_allow_html=True)
 
     with st.form("api_keys_form"):
-        st.subheader("API Credentials")
+        st.markdown("""
+        <div class="label-xs" style="margin-bottom: 16px;">API CREDENTIALS</div>
+        """, unsafe_allow_html=True)
+
         tf_key = st.text_input(
-            "TinyFish API Key (Required for Search & Fetch)",
+            "TINYFISH API KEY",
             value=st.session_state.user_tf_api_key,
             type="password",
-            help="Get your API key at: https://agent.tinyfish.ai/api-keys",
+            help="Required for Search & Fetch. Get at: https://agent.tinyfish.ai/api-keys",
         )
         gemini_key = st.text_input(
-            "Google Gemini API Key (Optional for LLM extraction)",
+            "GOOGLE GEMINI API KEY",
             value=st.session_state.user_gemini_api_key,
             type="password",
-            help="Get your key at: https://aistudio.google.com/. If empty, NiyamAI uses high-precision deterministic regex/NLP fallback.",
+            help="Optional for LLM extraction. Get at: https://aistudio.google.com/. Empty = deterministic fallback.",
         )
 
-        save_keys = st.form_submit_button("Save Credentials to Session", type="primary")
+        save_keys = st.form_submit_button("SAVE CREDENTIALS", type="primary", use_container_width=True)
         if save_keys:
             st.session_state.user_tf_api_key = tf_key.strip()
             st.session_state.user_gemini_api_key = gemini_key.strip()
-            st.success("API keys updated in session state!")
+            st.toast("API keys updated", icon="✓")
             st.rerun()
 
-    st.markdown("---")
-    st.subheader("Diagnostics & Live Health Check")
+    st.markdown("<hr>", unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="label-xs" style="margin-bottom: 16px;">DIAGNOSTICS</div>
+    """, unsafe_allow_html=True)
 
     c1, c2 = st.columns(2)
     with c1:
-        st.write(f"**Database Path:** `{NIYAMAI_DB_PATH}`")
-        st.write(f"**TinyFish Client Configured:** `{get_tinyfish_client().is_configured()}`")
-        st.write(f"**LLM Extraction Enabled:** `{bool(st.session_state.user_gemini_api_key)}`")
+        st.markdown(f"""
+        <div class="surface-card">
+            <div class="label">DATABASE PATH</div>
+            <div class="value-md" style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;">{NIYAMAI_DB_PATH}</div>
+            <div class="label" style="margin-top: 16px;">TINYFISH CLIENT</div>
+            <div class="value-md">{'CONFIGURED' if get_tinyfish_client().is_configured() else 'NOT CONFIGURED'}</div>
+            <div class="label" style="margin-top: 16px;">LLM EXTRACTION</div>
+            <div class="value-md">{'ENABLED' if bool(st.session_state.user_gemini_api_key) else 'FALLBACK MODE'}</div>
+        </div>
+        """, unsafe_allow_html=True)
 
     with c2:
-        if st.button("🧪 Test TinyFish Connection"):
+        if st.button("TEST TINYFISH CONNECTION", use_container_width=True):
             client = get_tinyfish_client()
             if not client.is_configured():
                 st.error("Cannot test: TINYFISH_API_KEY is not set.")
             else:
-                with st.spinner("Pinging TinyFish Search API with test query..."):
+                with st.spinner("Pinging TinyFish Search API..."):
                     try:
                         res = client.search(query="test", page=0)
-                        st.success(f"TinyFish Search API responded successfully! ({len(res.results)} results)")
+                        st.toast(f"TinyFish responded: {len(res.results)} results", icon="✓")
                     except Exception as e:
-                        st.error(f"TinyFish Connection Test Failed: {e}")
+                        st.error(f"Connection test failed: {e}")

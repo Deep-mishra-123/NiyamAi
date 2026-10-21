@@ -60,7 +60,11 @@ class TinyFishClient:
     """
 
     def __init__(self, api_key: Optional[str] = None, timeout: int = 150):
-        self.api_key = (api_key or TINYFISH_API_KEY).strip()
+        # Explicit empty string means "no key" - don't fall back to config
+        if api_key == "":
+            self.api_key = ""
+        else:
+            self.api_key = (api_key or TINYFISH_API_KEY).strip()
         self.timeout = timeout  # 150s recommended by TinyFish documentation
 
     def is_configured(self) -> bool:
