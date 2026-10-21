@@ -41,37 +41,56 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ---------------- LUXURY MINIMAL DESIGN SYSTEM ----------------
+# ---------------- PROFESSIONAL LIGHT DESIGN SYSTEM ----------------
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
     :root {
-        /* Luxury Minimal Palette */
-        --bg-canvas: #090A0C;
-        --bg-surface: #1A1D24;
-        --bg-surface-elevated: #232730;
-        --fg-primary: #F8FAFC;
-        --fg-secondary: #94A3B8;
-        --fg-muted: #586072;
-        --accent-primary: #00B4D8;
-        --accent-primary-dim: rgba(0, 180, 216, 0.12);
-        --accent-warm: #D4A843;
-        --accent-warm-dim: rgba(212, 168, 67, 0.12);
-        --accent-critical: #EF4444;
-        --accent-critical-dim: rgba(239, 68, 68, 0.12);
-        --border-subtle: #2D313D;
-        --border-emphasis: #3E4452;
+        /* Professional Light Palette */
+        --bg-page: #FAFAFA;
+        --bg-surface: #FFFFFF;
+        --bg-surface-hover: #F5F5F5;
+        --bg-input: #FFFFFF;
+        --fg-primary: #111827;
+        --fg-secondary: #4B5563;
+        --fg-muted: #9CA3AF;
+        --fg-placeholder: #D1D5DB;
+        --accent-primary: #0891B2;
+        --accent-primary-hover: #0E7490;
+        --accent-primary-light: rgba(8, 145, 178, 0.08);
+        --accent-primary-focus: rgba(8, 145, 178, 0.18);
+        --accent-warm: #D97706;
+        --accent-warm-light: rgba(217, 119, 6, 0.08);
+        --accent-critical: #DC2626;
+        --accent-critical-light: rgba(220, 38, 38, 0.08);
+        --accent-success: #059669;
+        --accent-success-light: rgba(5, 150, 105, 0.08);
+        --border-light: #E5E7EB;
+        --border-medium: #D1D5DB;
+        --border-focus: #0891B2;
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
         --radius-sharp: 4px;
         --radius-card: 6px;
-        --space-unit: 8px;
-        --transition-fast: 80ms ease-out;
-        --transition-standard: 120ms ease-out;
+        --space-1: 4px;
+        --space-2: 8px;
+        --space-3: 12px;
+        --space-4: 16px;
+        --space-5: 20px;
+        --space-6: 24px;
+        --space-8: 32px;
+        --space-10: 40px;
+        --space-12: 48px;
+        --transition-fast: 80ms cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-standard: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-slow: 250ms cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Global Reset */
+    /* Global Reset - Light Theme */
     .stApp {
-        background: var(--bg-canvas);
+        background: var(--bg-page);
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         color: var(--fg-primary);
     }
@@ -79,194 +98,221 @@ st.markdown("""
     /* Typography System */
     html, body, [class*="css"] {
         font-family: 'Inter', sans-serif !important;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     h1, h2, h3, h4, h5, h6 {
-        font-weight: 700 !important;
-        letter-spacing: -0.02em !important;
+        font-weight: 600 !important;
+        letter-spacing: -0.015em !important;
         color: var(--fg-primary) !important;
-        line-height: 1.15 !important;
+        line-height: 1.2 !important;
+        margin: 0 !important;
     }
 
-    h1 { font-size: clamp(1.75rem, 3vw, 2.25rem) !important; }
-    h2 { font-size: clamp(1.25rem, 2.5vw, 1.5rem) !important; }
-    h3 { font-size: clamp(1rem, 2vw, 1.125rem) !important; }
+    h1 { font-size: clamp(1.5rem, 2.5vw, 1.875rem) !important; }
+    h2 { font-size: clamp(1.125rem, 2vw, 1.375rem) !important; }
+    h3 { font-size: clamp(1rem, 1.5vw, 1.125rem) !important; }
 
     /* Label Style - Small, Bold, All-Caps */
     .label-xs, .stMetricLabel, [data-testid="stMetricLabel"] {
         font-size: 0.625rem !important;
-        font-weight: 700 !important;
+        font-weight: 600 !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.08em !important;
+        letter-spacing: 0.06em !important;
         color: var(--fg-muted) !important;
         line-height: 1 !important;
     }
 
     /* Value Style - Large, Light Weight */
     .value-lg, [data-testid="stMetricValue"] {
-        font-size: clamp(1.75rem, 3vw, 2.5rem) !important;
-        font-weight: 300 !important;
-        letter-spacing: -0.03em !important;
+        font-size: clamp(1.5rem, 2.5vw, 2rem) !important;
+        font-weight: 400 !important;
+        letter-spacing: -0.02em !important;
         color: var(--fg-primary) !important;
         line-height: 1.1 !important;
     }
 
     .value-md {
-        font-size: 1.125rem !important;
+        font-size: 0.875rem !important;
+        font-weight: 400 !important;
+        color: var(--fg-secondary) !important;
+        line-height: 1.5 !important;
+    }
+
+    .value-sm {
+        font-size: 0.8125rem !important;
         font-weight: 400 !important;
         color: var(--fg-secondary) !important;
     }
 
-    /* Sidebar - Left Margin Navigation */
+    /* Sidebar - Clean Left Panel */
     [data-testid="stSidebar"] {
         background: var(--bg-surface) !important;
-        border-right: 1px solid var(--border-subtle) !important;
-        padding: calc(var(--space-unit) * 3) calc(var(--space-unit) * 2) !important;
+        border-right: 1px solid var(--border-light) !important;
+        padding: var(--space-6) var(--space-4) !important;
+        box-shadow: var(--shadow-sm) !important;
     }
 
-    [data-testid="stSidebar"] h2 {
-        font-size: 0.75rem !important;
-        font-weight: 700 !important;
+    [data-testid="stSidebar"] > div:first-child {
+        padding-top: 0 !important;
+    }
+
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3 {
+        font-size: 0.625rem !important;
+        font-weight: 600 !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.1em !important;
+        letter-spacing: 0.08em !important;
         color: var(--fg-muted) !important;
-        margin-bottom: calc(var(--space-unit) * 2) !important;
+        margin-bottom: var(--space-4) !important;
     }
 
     [data-testid="stSidebar"] .stRadio > label {
         font-size: 0.8125rem !important;
         font-weight: 500 !important;
         color: var(--fg-secondary) !important;
-        padding: calc(var(--space-unit) * 1.5) var(--space-unit) !important;
-        margin-bottom: calc(var(--space-unit) * 0.5) !important;
+        padding: var(--space-3) var(--space-3) !important;
+        margin-bottom: var(--space-1) !important;
         border-radius: var(--radius-sharp) !important;
         transition: background var(--transition-fast), color var(--transition-fast) !important;
+        background: transparent !important;
+        border: none !important;
     }
 
     [data-testid="stSidebar"] .stRadio > label:hover {
-        background: var(--bg-surface-elevated) !important;
+        background: var(--bg-surface-hover) !important;
         color: var(--fg-primary) !important;
     }
 
-    [data-testid="stSidebar"] .stRadio [data-baseweb="radio"] > div:first-child {
-        background: var(--bg-surface-elevated) !important;
-        border: 1px solid var(--border-emphasis) !important;
+    [data-testid="stSidebar"] .stRadio [data-baseweb="radio"] {
+        display: none !important;
     }
 
-    [data-testid="stSidebar"] .stRadio [data-baseweb="radio"] > div:first-child > div {
-        background: var(--accent-primary) !important;
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-selected="true"] {
+        background: var(--accent-primary-light) !important;
+        color: var(--accent-primary) !important;
+        font-weight: 600 !important;
+    }
+
+    [data-testid="stSidebar"] .stRadio div[role="radiogroup"] > label[data-selected="true"]:hover {
+        background: var(--accent-primary-light) !important;
+        color: var(--accent-primary) !important;
     }
 
     [data-testid="stSidebar"] hr {
-        border-color: var(--border-subtle) !important;
-        margin: calc(var(--space-unit) * 2) 0 !important;
+        border-color: var(--border-light) !important;
+        margin: var(--space-5) 0 !important;
     }
 
-    /* Surface Cards - Flat, No Shadows, Sharp Corners */
+    /* Surface Cards - Clean, Sharp, Subtle Shadow */
     .surface-card {
         background: var(--bg-surface);
-        border: 1px solid var(--border-subtle);
+        border: 1px solid var(--border-light);
         border-radius: var(--radius-card);
-        padding: calc(var(--space-unit) * 3);
-        transition: border-color var(--transition-fast), background var(--transition-fast);
+        padding: var(--space-5);
+        transition: border-color var(--transition-fast), box-shadow var(--transition-standard), background var(--transition-fast);
+        box-shadow: var(--shadow-sm);
     }
 
     .surface-card:hover {
-        border-color: var(--border-emphasis);
-        background: var(--bg-surface-elevated);
+        border-color: var(--border-medium);
+        box-shadow: var(--shadow-md);
+        background: var(--bg-surface-hover);
     }
 
     .surface-card-elevated {
-        background: var(--bg-surface-elevated);
-        border: 1px solid var(--border-emphasis);
+        background: var(--bg-surface);
+        border: 1px solid var(--border-light);
         border-radius: var(--radius-card);
-        padding: calc(var(--space-unit) * 3);
+        padding: var(--space-5);
+        box-shadow: var(--shadow-md);
     }
 
-    /* Metric Display Panels */
+    /* Metric Panels */
     .metric-panel {
         display: flex;
         flex-direction: column;
-        gap: calc(var(--space-unit) * 0.5);
+        gap: var(--space-1);
     }
 
     .metric-panel .label {
         font-size: 0.625rem;
-        font-weight: 700;
+        font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.06em;
         color: var(--fg-muted);
     }
 
     .metric-panel .value {
-        font-size: clamp(1.5rem, 2.5vw, 2rem);
-        font-weight: 300;
-        letter-spacing: -0.03em;
+        font-size: clamp(1.375rem, 2vw, 1.75rem);
+        font-weight: 400;
+        letter-spacing: -0.02em;
         color: var(--fg-primary);
-        line-height: 1.1;
+        line-height: 1.15;
     }
 
-    .metric-panel .value.accent {
-        color: var(--accent-primary);
-        font-weight: 500;
-    }
+    .metric-panel .value.accent { color: var(--accent-primary); font-weight: 500; }
+    .metric-panel .value.warn { color: var(--accent-warm); font-weight: 500; }
+    .metric-panel .value.critical { color: var(--accent-critical); font-weight: 500; }
+    .metric-panel .value.success { color: var(--accent-success); font-weight: 500; }
 
-    .metric-panel .value.warn {
-        color: var(--accent-warm);
-        font-weight: 500;
-    }
-
-    .metric-panel .value.critical {
-        color: var(--accent-critical);
-        font-weight: 500;
-    }
-
-    /* Buttons - Minimal, Instant State Changes */
+    /* Buttons - Professional, Sharp, Instant Feedback */
     .stButton > button {
         font-family: 'Inter', sans-serif !important;
         font-size: 0.8125rem !important;
-        font-weight: 600 !important;
+        font-weight: 500 !important;
         letter-spacing: 0.01em !important;
         border-radius: var(--radius-sharp) !important;
-        padding: calc(var(--space-unit) * 1.25) calc(var(--space-unit) * 2.5) !important;
+        padding: var(--space-3) var(--space-5) !important;
         border: 1px solid transparent !important;
-        transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), opacity var(--transition-fast) !important;
+        transition: all var(--transition-fast) !important;
+        box-shadow: var(--shadow-sm) !important;
     }
 
     .stButton > button[kind="primary"] {
         background: var(--accent-primary) !important;
-        color: var(--bg-canvas) !important;
+        color: #FFFFFF !important;
         border-color: var(--accent-primary) !important;
     }
 
-    .stButton > button[kind="primary"]:hover {
-        background: #009BB8 !important;
-        border-color: #009BB8 !important;
+    .stButton > button[kind="primary"]:hover:not(:disabled) {
+        background: var(--accent-primary-hover) !important;
+        border-color: var(--accent-primary-hover) !important;
+        box-shadow: var(--shadow-md) !important;
+        transform: translateY(-1px) !important;
+    }
+
+    .stButton > button[kind="primary"]:active:not(:disabled) {
+        transform: translateY(0) !important;
+        box-shadow: var(--shadow-sm) !important;
     }
 
     .stButton > button[kind="secondary"] {
-        background: transparent !important;
+        background: var(--bg-surface) !important;
         color: var(--fg-secondary) !important;
-        border-color: var(--border-emphasis) !important;
+        border-color: var(--border-medium) !important;
     }
 
-    .stButton > button[kind="secondary"]:hover {
-        background: var(--bg-surface-elevated) !important;
+    .stButton > button[kind="secondary"]:hover:not(:disabled) {
+        background: var(--bg-surface-hover) !important;
         color: var(--fg-primary) !important;
         border-color: var(--accent-primary) !important;
     }
 
     .stButton > button:disabled {
-        opacity: 0.35 !important;
+        opacity: 0.45 !important;
         cursor: not-allowed !important;
+        transform: none !important;
     }
 
-    /* Input Fields */
+    /* Input Fields - Clean, Sharp */
     .stTextInput > div > div > input,
     .stTextArea > div > div > textarea,
-    .stSelectbox > div > div > div {
-        background: var(--bg-surface-elevated) !important;
-        border: 1px solid var(--border-subtle) !important;
+    .stSelectbox > div > div > div,
+    .stNumberInput > div > div > input {
+        background: var(--bg-input) !important;
+        border: 1px solid var(--border-medium) !important;
         border-radius: var(--radius-sharp) !important;
         color: var(--fg-primary) !important;
         font-family: 'Inter', sans-serif !important;
@@ -276,30 +322,38 @@ st.markdown("""
 
     .stTextInput > div > div > input:focus,
     .stTextArea > div > div > textarea:focus,
-    .stSelectbox > div > div > div:focus-within {
-        border-color: var(--accent-primary) !important;
-        box-shadow: 0 0 0 2px var(--accent-primary-dim) !important;
+    .stSelectbox > div > div > div:focus-within,
+    .stNumberInput > div > div > input:focus {
+        border-color: var(--border-focus) !important;
+        box-shadow: 0 0 0 3px var(--accent-primary-focus) !important;
+        outline: none !important;
     }
 
-    /* Tabs - Minimal Underline Style */
+    .stTextInput > div > div > input::placeholder,
+    .stTextArea > div > div > textarea::placeholder {
+        color: var(--fg-placeholder) !important;
+    }
+
+    /* Tabs - Clean Underline Style */
     .stTabs [data-baseweb="tab-list"] {
         gap: 0 !important;
-        border-bottom: 1px solid var(--border-subtle) !important;
+        border-bottom: 1px solid var(--border-light) !important;
         padding-bottom: 0 !important;
+        margin-bottom: var(--space-5) !important;
     }
 
     .stTabs [data-baseweb="tab"] {
         font-family: 'Inter', sans-serif !important;
-        font-size: 0.75rem !important;
+        font-size: 0.7rem !important;
         font-weight: 600 !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.06em !important;
+        letter-spacing: 0.05em !important;
         color: var(--fg-muted) !important;
         background: transparent !important;
         border: none !important;
         border-bottom: 2px solid transparent !important;
-        padding: calc(var(--space-unit) * 1.5) calc(var(--space-unit) * 2) !important;
-        margin-right: calc(var(--space-unit) * 1.5) !important;
+        padding: var(--space-3) var(--space-4) !important;
+        margin-right: var(--space-2) !important;
         transition: color var(--transition-fast), border-color var(--transition-fast) !important;
     }
 
@@ -312,11 +366,12 @@ st.markdown("""
         border-bottom-color: var(--accent-primary) !important;
     }
 
-    /* Dataframes / Tables */
+    /* Dataframes / Tables - Professional */
     .stDataFrame {
-        border: 1px solid var(--border-subtle) !important;
+        border: 1px solid var(--border-light) !important;
         border-radius: var(--radius-card) !important;
         overflow: hidden !important;
+        box-shadow: var(--shadow-sm) !important;
     }
 
     .stDataFrame [data-testid="stTable"] {
@@ -325,20 +380,21 @@ st.markdown("""
     }
 
     .stDataFrame th {
-        background: var(--bg-surface-elevated) !important;
+        background: var(--bg-page) !important;
         color: var(--fg-muted) !important;
         font-weight: 600 !important;
         font-size: 0.625rem !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.08em !important;
-        padding: calc(var(--space-unit) * 1.5) var(--space-unit) !important;
-        border-bottom: 1px solid var(--border-subtle) !important;
+        letter-spacing: 0.06em !important;
+        padding: var(--space-3) var(--space-3) !important;
+        border-bottom: 1px solid var(--border-light) !important;
+        text-align: left !important;
     }
 
     .stDataFrame td {
         color: var(--fg-secondary) !important;
-        padding: calc(var(--space-unit) * 1.5) var(--space-unit) !important;
-        border-bottom: 1px solid var(--border-subtle) !important;
+        padding: var(--space-3) var(--space-3) !important;
+        border-bottom: 1px solid var(--border-light) !important;
     }
 
     .stDataFrame tr:last-child td {
@@ -346,71 +402,78 @@ st.markdown("""
     }
 
     .stDataFrame tr:hover td {
-        background: var(--bg-surface-elevated) !important;
+        background: var(--bg-surface-hover) !important;
     }
 
-    /* Status Badges - Flat, Sharp */
+    /* Status Badges - Flat, Sharp, Minimal */
     .status-badge {
         display: inline-flex;
         align-items: center;
-        gap: calc(var(--space-unit) * 0.5);
+        gap: var(--space-1);
         font-size: 0.625rem !important;
-        font-weight: 700 !important;
+        font-weight: 600 !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.06em !important;
-        padding: calc(var(--space-unit) * 0.5) calc(var(--space-unit) * 1.25) !important;
+        letter-spacing: 0.05em !important;
+        padding: var(--space-1) var(--space-2.5) !important;
         border-radius: var(--radius-sharp) !important;
+        border: 1px solid transparent !important;
     }
 
     .status-badge--verified {
-        background: var(--accent-primary-dim) !important;
-        color: var(--accent-primary) !important;
-        border: 1px solid var(--accent-primary) !important;
+        background: var(--accent-success-light) !important;
+        color: var(--accent-success) !important;
+        border-color: var(--accent-success) !important;
     }
 
     .status-badge--review {
-        background: var(--accent-warm-dim) !important;
+        background: var(--accent-warm-light) !important;
         color: var(--accent-warm) !important;
-        border: 1px solid var(--accent-warm) !important;
+        border-color: var(--accent-warm) !important;
     }
 
     .status-badge--missing {
-        background: var(--accent-critical-dim) !important;
+        background: var(--accent-critical-light) !important;
         color: var(--accent-critical) !important;
-        border: 1px solid var(--accent-critical) !important;
+        border-color: var(--accent-critical) !important;
     }
 
     .status-badge--neutral {
-        background: var(--bg-surface-elevated) !important;
+        background: var(--bg-page) !important;
         color: var(--fg-muted) !important;
-        border: 1px solid var(--border-subtle) !important;
+        border-color: var(--border-medium) !important;
+    }
+
+    .status-badge--pending {
+        background: var(--accent-primary-light) !important;
+        color: var(--accent-primary) !important;
+        border-color: var(--accent-primary) !important;
     }
 
     /* Code Blocks */
     .stCodeBlock, code, pre {
         font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
         font-size: 0.75rem !important;
-        background: var(--bg-surface-elevated) !important;
-        border: 1px solid var(--border-subtle) !important;
+        background: var(--bg-page) !important;
+        border: 1px solid var(--border-light) !important;
         border-radius: var(--radius-sharp) !important;
     }
 
     /* Dividers */
     hr, .stDivider {
-        border-color: var(--border-subtle) !important;
-        margin: calc(var(--space-unit) * 3) 0 !important;
+        border-color: var(--border-light) !important;
+        margin: var(--space-6) 0 !important;
     }
 
-    /* Scrollbars */
+    /* Scrollbars - Subtle */
     ::-webkit-scrollbar {
         width: 6px;
         height: 6px;
     }
     ::-webkit-scrollbar-track {
-        background: var(--bg-canvas);
+        background: transparent;
     }
     ::-webkit-scrollbar-thumb {
-        background: var(--border-emphasis);
+        background: var(--border-medium);
         border-radius: 3px;
     }
     ::-webkit-scrollbar-thumb:hover {
@@ -420,27 +483,24 @@ st.markdown("""
     /* Hide Streamlit Branding */
     #MainMenu, footer, header { visibility: hidden; }
 
-    /* Expander */
+    /* Expander - Clean */
     .streamlit-expanderHeader {
         font-family: 'Inter', sans-serif !important;
         font-size: 0.8125rem !important;
-        font-weight: 600 !important;
+        font-weight: 500 !important;
         color: var(--fg-primary) !important;
         background: var(--bg-surface) !important;
-        border: 1px solid var(--border-subtle) !important;
+        border: 1px solid var(--border-light) !important;
         border-radius: var(--radius-sharp) !important;
+        padding: var(--space-3) var(--space-4) !important;
     }
 
     .streamlit-expanderContent {
-        background: var(--bg-surface-elevated) !important;
-        border: 1px solid var(--border-subtle) !important;
+        background: var(--bg-surface) !important;
+        border: 1px solid var(--border-light) !important;
         border-top: none !important;
         border-radius: 0 0 var(--radius-sharp) var(--radius-sharp) !important;
-    }
-
-    /* Tooltips */
-    .stTooltipIcon {
-        color: var(--fg-muted) !important;
+        padding: var(--space-4) !important;
     }
 
     /* Progress Bar */
@@ -450,8 +510,70 @@ st.markdown("""
     }
 
     .stProgress > div > div {
-        background: var(--bg-surface-elevated) !important;
+        background: var(--border-light) !important;
         border-radius: var(--radius-sharp) !important;
+    }
+
+    /* Toast Notifications */
+    .stToast {
+        border-radius: var(--radius-sharp) !important;
+        box-shadow: var(--shadow-lg) !important;
+        border: 1px solid var(--border-light) !important;
+    }
+
+    /* Animation Keyframes */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(4px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInLeft {
+        from { opacity: 0; transform: translateX(-8px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes pulseSoft {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.6; }
+    }
+
+    @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+
+    /* Staggered entrance for cards */
+    .surface-card {
+        animation: fadeIn var(--transition-standard) ease-out both;
+    }
+
+    .surface-card:nth-child(1) { animation-delay: 0ms; }
+    .surface-card:nth-child(2) { animation-delay: 40ms; }
+    .surface-card:nth-child(3) { animation-delay: 80ms; }
+    .surface-card:nth-child(4) { animation-delay: 120ms; }
+    .surface-card:nth-child(5) { animation-delay: 160ms; }
+
+    /* Loading shimmer */
+    .skeleton {
+        background: linear-gradient(90deg, var(--border-light) 25%, var(--border-medium) 50%, var(--border-light) 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+        border-radius: var(--radius-sharp);
+    }
+
+    /* Focus visible for accessibility */
+    *:focus-visible {
+        outline: 2px solid var(--accent-primary) !important;
+        outline-offset: 2px !important;
+    }
+
+    /* Reduce motion for users who prefer it */
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
     }
 </style>
 """, unsafe_allow_html=True)
@@ -520,13 +642,11 @@ def get_matching_agent() -> MatchingAgent:
 # ---------------- Sidebar Navigation & Status ----------------
 with st.sidebar:
     st.markdown("""
-    <div style="margin-bottom: 24px;">
-        <div style="font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-muted); margin-bottom: 4px;">NIYAMAI</div>
-        <div style="font-size: 1.125rem; font-weight: 700; letter-spacing: -0.02em; color: var(--fg-primary);">Autonomous Compliance Agent</div>
+    <div style="margin-bottom: var(--space-6); padding-bottom: var(--space-4); border-bottom: 1px solid var(--border-light);">
+        <div class="label-xs" style="margin-bottom: var(--space-1); color: var(--accent-primary);">NIYAMAI</div>
+        <div style="font-size: 1.125rem; font-weight: 600; letter-spacing: -0.015em; color: var(--fg-primary);">Autonomous Compliance Agent</div>
     </div>
     """, unsafe_allow_html=True)
-
-    st.markdown("<hr>", unsafe_allow_html=True)
 
     # Navigation menu
     menu = st.radio(
@@ -546,17 +666,17 @@ with st.sidebar:
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
-    # Active profile indicator - minimal
+    # Active profile indicator
     st.markdown("""
-    <div class="label-xs" style="margin-bottom: 8px;">ACTIVE PROFILE</div>
+    <div class="label-xs" style="margin-bottom: var(--space-3);">ACTIVE PROFILE</div>
     """, unsafe_allow_html=True)
 
     profile = st.session_state.current_profile
     st.markdown(f"""
-    <div class="surface-card" style="margin-bottom: 16px;">
-        <div class="value-md" style="margin-bottom: 4px;">{profile.name}</div>
+    <div class="surface-card" style="margin-bottom: var(--space-5);">
+        <div class="value-md" style="margin-bottom: var(--space-1); font-weight: 500;">{profile.name}</div>
         <div class="label-xs" style="color: var(--fg-secondary);">{profile.industry} · {profile.state}</div>
-        <div class="label-xs" style="color: var(--fg-muted); margin-top: 8px;">{profile.business_size}</div>
+        <div class="label-xs" style="color: var(--fg-muted); margin-top: var(--space-2);">{profile.business_size}</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -566,17 +686,17 @@ with st.sidebar:
     gemini_enabled = bool(st.session_state.user_gemini_api_key)
 
     st.markdown("""
-    <div class="label-xs" style="margin-bottom: 12px;">API STATUS</div>
+    <div class="label-xs" style="margin-bottom: var(--space-3);">API STATUS</div>
     """, unsafe_allow_html=True)
 
     st.markdown(f"""
     <div class="surface-card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <span class="value-md">TINYFISH SEARCH</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3);">
+            <span class="value-md">TinyFish Search</span>
             <span class="status-badge {'status-badge--verified' if tf_configured else 'status-badge--missing'}">{'CONNECTED' if tf_configured else 'KEY REQUIRED'}</span>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span class="value-md">GEMINI EXTRACTION</span>
+            <span class="value-md">Gemini Extraction</span>
             <span class="status-badge {'status-badge--verified' if gemini_enabled else 'status-badge--neutral'}">{'ENABLED' if gemini_enabled else 'FALLBACK MODE'}</span>
         </div>
     </div>
@@ -584,7 +704,7 @@ with st.sidebar:
 
     if not tf_configured:
         st.markdown("""
-        <div style="margin-top: 12px; padding: 12px; background: var(--accent-warm-dim); border: 1px solid var(--accent-warm); border-radius: var(--radius-sharp); font-size: 0.75rem; color: var(--accent-warm);">
+        <div style="margin-top: var(--space-4); padding: var(--space-3); background: var(--accent-warm-light); border: 1px solid var(--accent-warm); border-radius: var(--radius-sharp); font-size: 0.75rem; color: var(--accent-warm);">
             Configure TINYFISH_API_KEY in API SETTINGS to enable live scanning
         </div>
         """, unsafe_allow_html=True)
@@ -595,22 +715,22 @@ with st.sidebar:
 # ==============================================================================
 if menu == "DASHBOARD":
     st.markdown("""
-    <div style="margin-bottom: 32px;">
-        <div class="label-xs" style="margin-bottom: 8px; color: var(--accent-primary);">NIYAMAI / DASHBOARD</div>
+    <div style="margin-bottom: var(--space-10);">
+        <div class="label-xs" style="margin-bottom: var(--space-2); color: var(--accent-primary);">NIYAMAI / DASHBOARD</div>
         <h1>Compliance & Opportunity Hub</h1>
-        <div class="value-md" style="margin-top: 8px; max-width: 60ch;">Autonomous AI compliance assistant for Indian startups and MSMEs. Monitors official procurement portals — GeM, CPPP, MSME, Startup India — extracts structured notices, verifies claims against source evidence, and tracks critical deadlines.</div>
+        <div class="value-md" style="margin-top: var(--space-3); max-width: 60ch;">Autonomous AI compliance assistant for Indian startups and MSMEs. Monitors official procurement portals — GeM, CPPP, MSME, Startup India — extracts structured notices, verifies claims against source evidence, and tracks critical deadlines.</div>
     </div>
     """, unsafe_allow_html=True)
 
     saved_notices = st.session_state.db.get_saved_notices()
     scan_history = st.session_state.db.get_scan_history(limit=50)
 
-    # Hero metrics - asymmetric layout: left dense metrics, right contextual
+    # Hero metrics - asymmetric layout
     col_metrics, col_context = st.columns([0.45, 0.55], gap="large")
 
     with col_metrics:
         st.markdown("""
-        <div class="label-xs" style="margin-bottom: 16px;">KEY METRICS</div>
+        <div class="label-xs" style="margin-bottom: var(--space-4);">KEY METRICS</div>
         """, unsafe_allow_html=True)
 
         m1, m2 = st.columns(2, gap="medium")
@@ -649,7 +769,7 @@ if menu == "DASHBOARD":
 
     with col_context:
         st.markdown("""
-        <div class="label-xs" style="margin-bottom: 16px;">QUICK ACTION</div>
+        <div class="label-xs" style="margin-bottom: var(--space-4);">QUICK ACTION</div>
         """, unsafe_allow_html=True)
 
         profile = st.session_state.current_profile
@@ -657,8 +777,8 @@ if menu == "DASHBOARD":
 
         st.markdown(f"""
         <div class="surface-card">
-            <div class="value-md" style="margin-bottom: 4px;">Suggested Query</div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--fg-secondary); background: var(--bg-canvas); padding: 12px; border-radius: var(--radius-sharp); border: 1px solid var(--border-subtle); margin-bottom: 16px;">{suggested_q}</div>
+            <div class="value-md" style="margin-bottom: var(--space-2);">Suggested Query</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--fg-secondary); background: var(--bg-page); padding: var(--space-3); border-radius: var(--radius-sharp); border: 1px solid var(--border-light); margin-bottom: var(--space-4);">{suggested_q}</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -667,47 +787,42 @@ if menu == "DASHBOARD":
             st.toast("Navigate to LIVE SCAN to execute", icon="⚡")
 
         st.markdown("""
-        <div class="label-xs" style="margin-top: 24px; margin-bottom: 16px;">UPCOMING DEADLINES</div>
+        <div class="label-xs" style="margin-top: var(--space-8); margin-bottom: var(--space-4);">UPCOMING DEADLINES</div>
         """, unsafe_allow_html=True)
 
         if not saved_notices:
             st.markdown("""
-            <div class="surface-card" style="padding: 32px; text-align: center;">
+            <div class="surface-card" style="padding: var(--space-8); text-align: center;">
                 <div class="value-md" style="color: var(--fg-muted);">No notices saved</div>
-                <div class="label-xs" style="margin-top: 8px;">Execute a live scan to discover opportunities</div>
+                <div class="label-xs" style="margin-top: var(--space-2);">Execute a live scan to discover opportunities</div>
             </div>
             """, unsafe_allow_html=True)
         else:
             for sn in saved_notices[:3]:
+                deadline_display = sn.deadline or "Check Portal"
+                score_class = "accent" if sn.relevance_score >= 80 else "warn" if sn.relevance_score >= 50 else "critical"
                 st.markdown(f"""
-                <div class="niyam-card">
-                    <h4>{sn.title}</h4>
-                    <p style="margin-bottom: 6px;"><strong>Issuing Portal:</strong> <span class="niyam-badge-teal">{sn.site_name}</span> | <strong>Relevance:</strong> {sn.relevance_score}/100</p>
-                    <p style="color: #DC2626; font-weight: 600;">⏰ Submission Deadline: {sn.deadline or 'Check Portal'}</p>
-                    <a href="{sn.url}" target="_blank">🔗 Open Official Source Notice</a>
+                <div class="surface-card">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-4); margin-bottom: var(--space-3);">
+                        <div style="flex: 1;">
+                            <span class="status-badge status-badge--neutral">{sn.site_name}</span>
+                            <div class="value-md" style="margin-top: var(--space-2); font-weight: 500;">{sn.title}</div>
+                        </div>
+                        <div style="flex-shrink: 0; text-align: right;">
+                            <span class="status-badge {'status-badge--verified' if score_class == 'accent' else 'status-badge--review' if score_class == 'warn' else 'status-badge--missing'}">SCORE {sn.relevance_score}/100</span>
+                        </div>
+                    </div>
+                    <div style="color: var(--fg-secondary); font-size: 0.8125rem; line-height: 1.5; margin-bottom: var(--space-2);">{sn.snippet if hasattr(sn, 'snippet') and sn.snippet else 'Saved notice from live scan'}</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding-top: var(--space-3); border-top: 1px solid var(--border-light);">
+                        <span class="value-sm" style="color: var(--accent-critical); font-weight: 500;">⏰ {deadline_display}</span>
+                        <a href="{sn.url}" target="_blank" class="status-badge status-badge--neutral" style="text-decoration: none;">OPEN SOURCE</a>
+                    </div>
                 </div>
                 """, unsafe_allow_html=True)
 
-    with col_right:
-        st.subheader("🏢 Active Company Snapshot")
-        cp = st.session_state.current_profile
-        st.markdown(f"""
-        <div class="niyam-card">
-            <h3>{cp.name}</h3>
-            <p><strong>Primary Industry:</strong> {cp.industry}</p>
-            <p><strong>Operating State:</strong> {cp.state}</p>
-            <p><strong>Scale:</strong> {cp.business_size}</p>
-            <p><strong>Annual Turnover:</strong> ₹{cp.annual_turnover_inr or 'N/A'} Lakhs</p>
-            <p><strong>Existing Registrations:</strong></p>
-            <ul>
-                {''.join(f'<li>{r}</li>' for r in cp.existing_registrations)}
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-
     st.markdown("""
-    <div class="legal-disclaimer">
-        <strong>Compliance Notice:</strong> NiyamAI is an autonomous discovery and analysis tool. Final bidding requirements, qualification criteria, and document formats must always be independently confirmed with the respective government issuing authority.
+    <div style="margin-top: var(--space-10); padding: var(--space-4); background: var(--bg-page); border: 1px solid var(--border-light); border-radius: var(--radius-card);">
+        <div class="value-md" style="color: var(--fg-muted);"><strong>Compliance Notice:</strong> NiyamAI is an autonomous discovery and analysis tool. Final bidding requirements, qualification criteria, and document formats must always be independently confirmed with the respective government issuing authority.</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -717,16 +832,16 @@ if menu == "DASHBOARD":
 # ==============================================================================
 elif menu == "BUSINESS PROFILE":
     st.markdown("""
-    <div style="margin-bottom: 32px;">
-        <div class="label-xs" style="margin-bottom: 8px; color: var(--accent-primary);">NIYAMAI / BUSINESS PROFILE</div>
+    <div style="margin-bottom: var(--space-10);">
+        <div class="label-xs" style="margin-bottom: var(--space-2); color: var(--accent-primary);">NIYAMAI / BUSINESS PROFILE</div>
         <h1>Eligibility Attributes</h1>
-        <div class="value-md" style="margin-top: 8px; max-width: 60ch;">NiyamAI uses your company profile to score opportunities, identify eligibility gaps, and produce tailored document checklists.</div>
+        <div class="value-md" style="margin-top: var(--space-3); max-width: 60ch;">NiyamAI uses your company profile to score opportunities, identify eligibility gaps, and produce tailored document checklists.</div>
     </div>
     """, unsafe_allow_html=True)
 
     # Preset templates
     st.markdown("""
-    <div class="label-xs" style="margin-bottom: 16px;">DEMO PRESETS</div>
+    <div class="label-xs" style="margin-bottom: var(--space-4);">DEMO PRESETS</div>
     """, unsafe_allow_html=True)
 
     preset_cols = st.columns(3)
@@ -752,7 +867,7 @@ elif menu == "BUSINESS PROFILE":
         curr = st.session_state.current_profile
 
         st.markdown("""
-        <div class="label-xs" style="margin-bottom: 16px;">CORE IDENTITY</div>
+        <div class="label-xs" style="margin-bottom: var(--space-4);">CORE IDENTITY</div>
         """, unsafe_allow_html=True)
 
         name = st.text_input("BUSINESS NAME", value=curr.name)
@@ -781,7 +896,7 @@ elif menu == "BUSINESS PROFILE":
             )
 
         st.markdown("""
-        <div class="label-xs" style="margin-top: 20px; margin-bottom: 12px;">ACTIVE REGISTRATIONS</div>
+        <div class="label-xs" style="margin-top: var(--space-6); margin-bottom: var(--space-3);">ACTIVE REGISTRATIONS</div>
         """, unsafe_allow_html=True)
 
         registrations = st.multiselect(
@@ -803,7 +918,7 @@ elif menu == "BUSINESS PROFILE":
         )
 
         st.markdown("""
-        <div class="label-xs" style="margin-top: 20px; margin-bottom: 12px;">CAPABILITIES</div>
+        <div class="label-xs" style="margin-top: var(--space-6); margin-bottom: var(--space-3);">CAPABILITIES</div>
         """, unsafe_allow_html=True)
 
         description = st.text_area("PRODUCTS / CAPABILITIES OVERVIEW", value=curr.description or "")
@@ -826,10 +941,10 @@ elif menu == "BUSINESS PROFILE":
 # ==============================================================================
 elif menu == "LIVE SCAN":
     st.markdown("""
-    <div style="margin-bottom: 32px;">
-        <div class="label-xs" style="margin-bottom: 8px; color: var(--accent-primary);">NIYAMAI / LIVE SCAN</div>
+    <div style="margin-bottom: var(--space-10);">
+        <div class="label-xs" style="margin-bottom: var(--space-2); color: var(--accent-primary);">NIYAMAI / LIVE SCAN</div>
         <h1>Government Portal Discovery</h1>
-        <div class="value-md" style="margin-top: 8px; max-width: 60ch;">Search live web portals in real-time using the TinyFish Search API. Filter for official Indian procurement, tender, and MSME scheme sources.</div>
+        <div class="value-md" style="margin-top: var(--space-3); max-width: 60ch;">Search live web portals in real-time using the TinyFish Search API. Filter for official Indian procurement, tender, and MSME scheme sources.</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -922,23 +1037,23 @@ elif menu == "LIVE SCAN":
     # Display Search Results
     if st.session_state.search_results:
         st.markdown(f"""
-        <div class="label-xs" style="margin-bottom: 16px;">SEARCH RESULTS — {len(st.session_state.search_results)} ITEMS</div>
+        <div class="label-xs" style="margin-bottom: var(--space-4);">SEARCH RESULTS — {len(st.session_state.search_results)} ITEMS</div>
         """, unsafe_allow_html=True)
 
         for res in st.session_state.search_results:
             st.markdown(f"""
-            <div class="surface-card" style="margin-bottom: 12px;">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 8px;">
+            <div class="surface-card" style="margin-bottom: var(--space-3);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-4); margin-bottom: var(--space-2);">
                     <div style="flex: 1;">
                         <span class="status-badge status-badge--neutral">{res.site_name or 'WEB SOURCE'}</span>
-                        <div class="value-md" style="margin-top: 8px;">{res.title}</div>
+                        <div class="value-md" style="margin-top: var(--space-2);">{res.title}</div>
                     </div>
-                    <div style="flex-shrink: 0; width: 140px; text-align: right;">
-                        <div class="label-xs" style="margin-bottom: 4px;">POSITION</div>
-                        <div class="value-md" style="font-size: 1.5rem;">#{res.position}</div>
+                    <div style="flex-shrink: 0; width: 120px; text-align: right;">
+                        <div class="label-xs" style="margin-bottom: var(--space-1);">POSITION</div>
+                        <div class="value-md" style="font-size: 1.375rem;">#{res.position}</div>
                     </div>
                 </div>
-                <div style="color: var(--fg-secondary); font-size: 0.8125rem; line-height: 1.5; margin-bottom: 8px;">{res.snippet}</div>
+                <div style="color: var(--fg-secondary); font-size: 0.8125rem; line-height: 1.6; margin-bottom: var(--space-2);">{res.snippet}</div>
                 <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--fg-muted);">URL: {res.url}</div>
             </div>
             """, unsafe_allow_html=True)
@@ -953,9 +1068,9 @@ elif menu == "LIVE SCAN":
                 st.toast("Navigate to NOTICE AUDIT", icon="⚡")
     elif client.is_configured():
         st.markdown("""
-        <div class="surface-card" style="padding: 32px; text-align: center;">
+        <div class="surface-card" style="padding: var(--space-8); text-align: center;">
             <div class="value-md" style="color: var(--fg-muted);">No results</div>
-            <div class="label-xs" style="margin-top: 8px;">Enter a query and execute scan</div>
+            <div class="label-xs" style="margin-top: var(--space-2);">Enter a query and execute scan</div>
         </div>
         """, unsafe_allow_html=True)
 
