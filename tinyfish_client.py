@@ -207,7 +207,7 @@ class TinyFishClient:
         urls: List[str],
         purpose: Optional[str] = None,
         format: str = "markdown",
-        max_retries: int = 1,
+        max_retries: int = 3,
     ) -> FetchResponse:
         """
         Fetches web page contents via TinyFish Fetch API.
@@ -294,7 +294,7 @@ class TinyFishClient:
                     )
                 elif resp.status_code == 429:
                     if attempt < max_retries:
-                        time.sleep(2.0)
+                        time.sleep(2.0 * (attempt + 1))
                         continue
                     raise TinyFishRateLimitError(
                         "TinyFish Fetch Rate Limit Exceeded (HTTP 429).",
@@ -302,6 +302,16 @@ class TinyFishClient:
                         code="RATE_LIMIT_EXCEEDED",
                     )
                 else:
+                    # Don't retry on 4xx client errors (except 429)
+                    if 400 <= resp.status_code < 500:
+                        raise TinyFishError(
+                            f"TinyFish Fetch API Error (HTTP {resp.status_code}): {resp.text}",
+                            status_code=resp.status_code,
+                        )
+                    # Retry on 5xx server errors
+                    if attempt < max_retries:
+                        time.sleep(1.5 * (attempt + 1))
+                        continue
                     raise TinyFishError(
                         f"TinyFish Fetch API Error (HTTP {resp.status_code}): {resp.text}",
                         status_code=resp.status_code,
@@ -309,12 +319,12 @@ class TinyFishClient:
 
             except requests.Timeout as e:
                 if attempt < max_retries:
-                    time.sleep(1.0)
+                    time.sleep(1.0 * (attempt + 1))
                     continue
                 raise TinyFishError("TinyFish Fetch request timed out.", status_code=504, code="TIMEOUT") from e
             except requests.RequestException as e:
                 if attempt < max_retries:
-                    time.sleep(1.0)
+                    time.sleep(1.0 * (attempt + 1))
                     continue
                 raise TinyFishError(f"Network error communicating with TinyFish Fetch: {e}") from e
 

@@ -1006,17 +1006,22 @@ elif menu == "NOTICE AUDIT":
                 st.toast("Loaded MNRE Solar Rooftop demo notice", icon="✅")
                 st.rerun()
 
-    if fetch_clicked and input_url:
+    # Handle retry trigger from session state
+    retry_url = st.session_state.pop("retry_fetch_url", None)
+    should_fetch = fetch_clicked or retry_url is not None
+    fetch_url = input_url if fetch_clicked else retry_url
+
+    if should_fetch and fetch_url:
         with st.spinner("Fetching with TinyFish Fetch API..."):
             try:
                 fetch_res = client.fetch(
-                    urls=[input_url],
+                    urls=[fetch_url],
                     purpose="Extract procurement requirements, deadlines, and eligibility criteria for MSME compliance audit",
                     format="markdown",
                 )
                 if fetch_res.results:
                     st.session_state.fetched_notice = fetch_res.results[0]
-                    st.session_state.active_notice_url = input_url
+                    st.session_state.active_notice_url = fetch_url
                     st.toast(f"Fetched {len(st.session_state.fetched_notice.text or '')} chars", icon="✅")
                 elif fetch_res.errors:
                     err = fetch_res.errors[0]
@@ -1029,6 +1034,7 @@ elif menu == "NOTICE AUDIT":
                         **Fetch Failed: Proxy Error**
                         
                         TinyFish could not reach the target URL due to a network/proxy issue on their end.
+                        Automatic retries (3x) were attempted.
                         
                         **Details:** `{err_msg}` (Status: {err_status})
                         
@@ -1037,6 +1043,7 @@ elif menu == "NOTICE AUDIT":
                         col_retry, col_demo = st.columns(2)
                         with col_retry:
                             if st.button("RETRY FETCH", type="primary", use_container_width=True):
+                                st.session_state.retry_fetch_url = fetch_url
                                 st.rerun()
                         with col_demo:
                             if st.button("USE DEMO NOTICE INSTEAD", use_container_width=True):
