@@ -1020,7 +1020,43 @@ elif menu == "NOTICE AUDIT":
                     st.toast(f"Fetched {len(st.session_state.fetched_notice.text or '')} chars", icon="✅")
                 elif fetch_res.errors:
                     err = fetch_res.errors[0]
-                    st.error(f"Fetch Error: {err.error} (Status: {err.status})")
+                    err_msg = err.error or "Unknown error"
+                    err_status = err.status or "N/A"
+
+                    # Handle specific proxy errors
+                    if "proxy" in err_msg.lower():
+                        st.error(f"""
+                        **Fetch Failed: Proxy Error**
+                        
+                        TinyFish could not reach the target URL due to a network/proxy issue on their end.
+                        
+                        **Details:** `{err_msg}` (Status: {err_status})
+                        
+                        **Options:**
+                        """)
+                        col_retry, col_demo = st.columns(2)
+                        with col_retry:
+                            if st.button("RETRY FETCH", type="primary", use_container_width=True):
+                                st.rerun()
+                        with col_demo:
+                            if st.button("USE DEMO NOTICE INSTEAD", use_container_width=True):
+                                from tests.conftest import SAMPLE_FETCH_SUCCESS_JSON
+                                from models import FetchResponseItem
+                                raw_sample = SAMPLE_FETCH_SUCCESS_JSON["results"][0]
+                                st.session_state.fetched_notice = FetchResponseItem(
+                                    url=raw_sample["url"], final_url=raw_sample["final_url"],
+                                    title=raw_sample["title"], description=raw_sample["description"],
+                                    language=raw_sample["language"], text=raw_sample["text"],
+                                    format=raw_sample["format"],
+                                )
+                                st.session_state.active_notice_url = raw_sample["url"]
+                                st.session_state.notice_extraction = None
+                                st.session_state.notice_verification = None
+                                st.session_state.notice_matching = None
+                                st.toast("Loaded MNRE Solar Rooftop demo notice", icon="✅")
+                                st.rerun()
+                    else:
+                        st.error(f"Fetch Error: {err_msg} (Status: {err_status})")
             except Exception as e:
                 st.error(f"Fetch failed: {e}")
 
