@@ -742,7 +742,7 @@ elif menu == "BUSINESS PROFILE":
                 p = BusinessProfile(name=name, industry=industry, state=state, business_size=size, categories_of_interest=cats, existing_registrations=regs, annual_turnover_inr=turnover, description=desc)
                 st.session_state.db.save_profile(p)
                 st.session_state.current_profile = p
-                st.toast(f"Loaded {name}", icon="✓")
+                st.toast(f"Loaded {name}", icon="✅")
                 st.rerun()
 
     st.markdown("<hr>", unsafe_allow_html=True)
@@ -817,7 +817,7 @@ elif menu == "BUSINESS PROFILE":
             )
             st.session_state.db.save_profile(updated_profile)
             st.session_state.current_profile = updated_profile
-            st.toast(f"Profile '{name}' saved", icon="✓")
+            st.toast(f"Profile '{name}' saved", icon="✅")
             st.rerun()
 
 
@@ -893,7 +893,7 @@ elif menu == "LIVE SCAN":
                 st.session_state.search_results = search_response.results
                 st.session_state.last_search_query = query
                 st.session_state.db.save_scan(query=query, profile_name=cp.name, results=search_response.results)
-                st.toast(f"Found {search_response.total_results} opportunities", icon="✓")
+                st.toast(f"Found {search_response.total_results} opportunities", icon="✅")
             except TinyFishAuthError as e:
                 st.error(f"Authentication Failed: {e}")
             except TinyFishCreditsError as e:
@@ -916,7 +916,7 @@ elif menu == "LIVE SCAN":
             ]
             st.session_state.search_results = results
             st.session_state.last_search_query = query + " (Demo)"
-            st.toast("Loaded demo tenders", icon="✓")
+            st.toast("Loaded demo tenders", icon="✅")
             st.rerun()
 
     # Display Search Results
@@ -1003,7 +1003,7 @@ elif menu == "NOTICE AUDIT":
                 st.session_state.notice_extraction = None
                 st.session_state.notice_verification = None
                 st.session_state.notice_matching = None
-                st.toast("Loaded MNRE Solar Rooftop demo notice", icon="✓")
+                st.toast("Loaded MNRE Solar Rooftop demo notice", icon="✅")
                 st.rerun()
 
     if fetch_clicked and input_url:
@@ -1017,7 +1017,7 @@ elif menu == "NOTICE AUDIT":
                 if fetch_res.results:
                     st.session_state.fetched_notice = fetch_res.results[0]
                     st.session_state.active_notice_url = input_url
-                    st.toast(f"Fetched {len(st.session_state.fetched_notice.text or '')} chars", icon="✓")
+                    st.toast(f"Fetched {len(st.session_state.fetched_notice.text or '')} chars", icon="✅")
                 elif fetch_res.errors:
                     err = fetch_res.errors[0]
                     st.error(f"Fetch Error: {err.error} (Status: {err.status})")
@@ -1355,7 +1355,7 @@ elif menu == "NOTICE AUDIT":
             if is_dup:
                 st.toast(f"Notice updated (ID: {nid})", icon="↻")
             else:
-                st.toast(f"Notice saved (ID: {nid})", icon="✓")
+                st.toast(f"Notice saved (ID: {nid})", icon="✅")
 
 
 # ==============================================================================
@@ -1505,7 +1505,7 @@ elif menu == "API SETTINGS":
         if save_keys:
             st.session_state.user_tf_api_key = tf_key.strip()
             st.session_state.user_gemini_api_key = gemini_key.strip()
-            st.toast("API keys updated", icon="✓")
+            st.toast("API keys updated", icon="✅")
             st.rerun()
 
     st.markdown("<hr>", unsafe_allow_html=True)
@@ -1536,6 +1536,6 @@ elif menu == "API SETTINGS":
                 with st.spinner("Pinging TinyFish Search API..."):
                     try:
                         res = client.search(query="test", page=0)
-                        st.toast(f"TinyFish responded: {len(res.results)} results", icon="✓")
+                        st.toast(f"TinyFish responded: {len(res.results)} results", icon="✅")
                     except Exception as e:
                         st.error(f"Connection test failed: {e}")
